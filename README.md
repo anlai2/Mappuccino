@@ -21,6 +21,7 @@ If any errors come up, it can be easily fixed through googling the error. If any
 - react-native-maps
 - react-native-elements 
 - lodash
+- latlng-to-zip
 
 ## APIs Used
 Yelp
