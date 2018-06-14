@@ -1,7 +1,7 @@
 # Mappuccino
 React Native Application that allows users to find nearby coffee shops in a UI friendly manner.
 
-# Setup
+## Setup
 1. Clone the repository.
 2. In the terminal, run npm install in the project folder. This should download all the dependencies and libraries we are using.
 3. Download Expo on (https://expo.io/).
@@ -13,7 +13,7 @@ If you have a physical iOS device, you can put your phone number in and it will 
 
 If any errors come up, it can be easily fixed through googling the error. If anything message Andy on Slack. 
 
-# Libraries & Dependencies
+## Libraries & Dependencies
 - Expo
 - react-native-router-flux
 - react-native-maps
