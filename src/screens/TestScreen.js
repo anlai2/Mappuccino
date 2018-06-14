@@ -4,7 +4,7 @@ import { MapView, Marker } from 'expo';
 import { Button } from 'react-native-elements';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default class MapScreen extends React.Component {
+export default class TestScreen extends React.Component {
   // Component's state, cannot be accessed cross screens
   // Good for data that is minimal
   // this.state.region refers to the object
