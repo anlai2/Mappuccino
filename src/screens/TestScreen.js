@@ -4,6 +4,8 @@ import { MapView, Marker } from 'expo';
 import { Button } from 'react-native-elements';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
+const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
+
 export default class TestScreen extends React.Component {
   // Component's state, cannot be accessed cross screens
   // Good for data that is minimal
@@ -13,8 +15,8 @@ export default class TestScreen extends React.Component {
     region: {
       longitude: -122.45213824240618,
       latitude: 37.738948026999054,
-      longitudeDelta: 0.05,
-      latitudeDelta: 0.05
+      longitudeDelta: 0.015,
+      latitudeDelta: 0.015
     },
     coffeeShops: {}
   };
@@ -24,8 +26,8 @@ export default class TestScreen extends React.Component {
       this.setState({
         region: {
           ...position.coords,
-          longitudeDelta: 0.05,
-          latitudeDelta: 0.05
+          longitudeDelta: 0.015,
+          latitudeDelta: 0.015
         }
       });
     });
@@ -59,7 +61,9 @@ export default class TestScreen extends React.Component {
       <MapView.Marker
         key={shop.id}
         title={shop.name}
+        description={shop.rating + '/5 ' + shop.price}
         coordinate={shop.coordinates}
+        image={COFFEE_MARKER}
       />
     ));
   };
@@ -75,12 +79,14 @@ export default class TestScreen extends React.Component {
           showsUserLocation={true}
           onRegionChangeComplete={coor => this.setState({ region: coor })}
           loadingEnabled={true}
+          showsBuildings={false}
+          showsPointsOfInterest={false}
+          loadingIndicatorColor='brown'
         >
           {!_.isEmpty(this.state.coffeeShops) ? this.renderShops() : null}
         </MapView>
         <View style={styles.buttonContainer}>
           <Button
-            large
             title="Find Coffee"
             backgroundColor="brown"
             icon={{ name: 'search' }}
