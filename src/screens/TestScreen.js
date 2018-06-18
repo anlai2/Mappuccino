@@ -25,7 +25,7 @@ const { width, height } = Dimensions.get('window');
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = width - 100;
 
-export default class MapScreen extends React.Component {
+export default class TestScreen extends React.Component {
   // Component's state, cannot be accessed cross screens
   // Good for data that is minimal
   // this.state.region refers to the object
