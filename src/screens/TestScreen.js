@@ -242,10 +242,10 @@ export default class TestScreen extends React.Component {
             onPress={this.onButtonPress}
           >
             <LinearGradient
-              style={styles.loginButtonContainer}
-              colors={['#FF5637', '#FF444A', '#FF2D68']}
+              style={styles.searchGradientStyle}
+              colors={['#86592d', '#ac7339', '#c68c53']}
             >
-              <Text style={styles.loginButtonText}>Search Coffee</Text>
+              <Text style={styles.searchButtonStyle}>Search Coffee</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -331,5 +331,20 @@ const styles = StyleSheet.create({
   noteStyle: {
     margin: 5,
     fontSize: 16
+  },
+  searchButtonStyle: {
+    color: 'white'
+  },
+  searchGradientStyle: {
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    width: 300,
+    height: 45,
+    padding: 15,
+    borderRadius: 20,
+    shadowOffset: { width: 3, height: 3 },
+    shadowColor: 'black',
+    shadowOpacity: 0.2
   }
 });
