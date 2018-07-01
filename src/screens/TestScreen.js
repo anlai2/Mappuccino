@@ -218,7 +218,7 @@ export default class TestScreen extends React.Component {
             style={styles.loadingGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
-            <ActivityIndicator />
+            <ActivityIndicator color="#FFFFFF" />
           </LinearGradient>
         </View>
       );
