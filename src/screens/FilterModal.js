@@ -4,11 +4,26 @@ import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 class FilterModal extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    filter: {
+      price: [2]
+    }
+  };
+
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <View style={styles.onBackContainer}>
-          <TouchableOpacity onPress={() => Actions.pop()}>
+          <TouchableOpacity
+            onPress={() => {
+              Actions.pop({ refresh: { filter: this.state.filter } });
+            }}
+          >
             <Icon
               type="entypo"
               name="chevron-thin-down"
@@ -33,7 +48,8 @@ const styles = {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
-    position: 'relative'
+    position: 'relative',
+    paddingTop: 25
   },
   onBackContainer: {
     backgroundColor: '#D3D3D3'

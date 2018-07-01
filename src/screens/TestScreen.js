@@ -28,6 +28,10 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = width - 100;
 
 export default class TestScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   // Component's state, cannot be accessed cross screens
   // Good for data that is minimal
   // this.state.region refers to the object
@@ -39,8 +43,18 @@ export default class TestScreen extends React.Component {
       longitudeDelta: 0.0015,
       latitudeDelta: 0.0015
     },
-    coffeeShops: {}
+    coffeeShops: {},
+    filter: {
+      price: !_.isNull(this.props.filter.price) ? this.props.filter.price : []
+    }
   };
+
+  componentWillReceiveProps(nextProps) {
+    console.log('THIS IS NEXT PROPS');
+    console.log(nextProps);
+    this.setState({ filter: nextProps.filter });
+    console.log('THIS IS NEXT PROPS');
+  }
 
   componentDidMount() {
     this.animation.addListener(({ value }) => {
@@ -88,12 +102,15 @@ export default class TestScreen extends React.Component {
   // ES6 function that is ran when we call it on a UI
   // We are calling it on the onPress property of Button in the render method
   onButtonPress = () => {
+    console.log(this.state.filter.price);
     fetch(
       `https://api.yelp.com/v3/businesses/search?&latitude=${
         this.state.region.latitude
       }&longitude=${
         this.state.region.longitude
-      }&open_now=true&term=coffee&radius=2500&offset=25&sort_by=distance`,
+      }&open_now=true&term=coffee&radius=2500&offset=25&sort_by=distance&price=${this.state.filter.price.join(
+        ','
+      )}`,
       {
         method: 'GET',
         headers: {
@@ -104,10 +121,11 @@ export default class TestScreen extends React.Component {
     )
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         this.setState({ coffeeShops: data.businesses });
-        console.log(data.businesses[0].image_url);
       })
-      .then(() => this.renderCards());
+      .then(() => this.renderCards())
+      .catch(err => console.log(err));
   };
 
   renderCards = () => {
@@ -175,6 +193,7 @@ export default class TestScreen extends React.Component {
 
   // Main aspect of a react component, essentially handles what is to be displayed
   render() {
+    console.log(this.props);
     return (
       // Most components/screens must have a root tag, here it is a View tag
       <View style={styles.container}>
@@ -220,7 +239,7 @@ export default class TestScreen extends React.Component {
                     onPress={() => Linking.openURL(shop.url)}
                   >
                     <Card
-                      featuredTitle={shop.name}
+                      featuredTitle={shop.name + shop.price}
                       featuredTitleStyle={styles.featuredTitleStyle}
                       image={{
                         uri: shop.image_url
@@ -273,6 +292,12 @@ export default class TestScreen extends React.Component {
     );
   }
 }
+
+TestScreen.defaultProps = {
+  filter: {
+    price: null
+  }
+};
 
 // We can create a styles object to keep track of multiple styles
 // Can also be implemented in the JSX tag, but this way is cleaner
