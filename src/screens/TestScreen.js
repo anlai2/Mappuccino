@@ -16,7 +16,8 @@ import {
   ScrollView,
   Animated,
   Image,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
@@ -42,7 +43,8 @@ export default class TestScreen extends React.Component {
         price: !_.isNull(this.props.filterData.filter.price)
           ? this.props.filterData.filter.price
           : []
-      }
+      },
+      loading: false
     };
   }
 
@@ -104,6 +106,7 @@ export default class TestScreen extends React.Component {
   // ES6 function that is ran when we call it on a UI
   // We are calling it on the onPress property of Button in the render method
   onButtonPress = () => {
+    this.setState({ loading: true });
     fetch(
       `https://api.yelp.com/v3/businesses/search?&latitude=${
         this.state.region.latitude
@@ -126,6 +129,7 @@ export default class TestScreen extends React.Component {
         this.setState({ coffeeShops: data.businesses });
       })
       .then(() => this.renderCards())
+      .then(() => this.setState({ loading: false }))
       .catch(err => console.log(err));
   };
 
@@ -190,6 +194,35 @@ export default class TestScreen extends React.Component {
         </MapView.Marker>
       );
     });
+  };
+
+  renderButton = () => {
+    if (!this.state.loading) {
+      return (
+        <TouchableOpacity
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+          onPress={this.onButtonPress}
+        >
+          <LinearGradient
+            style={styles.searchGradientStyle}
+            colors={['#86592d', '#ac7339', '#c68c53']}
+          >
+            <Text style={styles.searchButtonStyle}>Search Coffee</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <LinearGradient
+            style={styles.loadingGradientStyle}
+            colors={['#86592d', '#ac7339', '#c68c53']}
+          >
+            <ActivityIndicator color="#FFFFFF" />
+          </LinearGradient>
+        </View>
+      );
+    }
   };
 
   // Main aspect of a react component, essentially handles what is to be displayed
@@ -257,19 +290,7 @@ export default class TestScreen extends React.Component {
               ))
             : null}
         </Animated.ScrollView>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={{ alignItems: 'center', justifyContent: 'center' }}
-            onPress={this.onButtonPress}
-          >
-            <LinearGradient
-              style={styles.searchGradientStyle}
-              colors={['#86592d', '#ac7339', '#c68c53']}
-            >
-              <Text style={styles.searchButtonStyle}>Search Coffee</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.buttonContainer}>{this.renderButton()}</View>
         <View style={styles.filterContainer}>
           <TouchableOpacity
             style={{ alignItems: 'center', justifyContent: 'center' }}
@@ -395,6 +416,18 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   searchGradientStyle: {
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    width: 300,
+    height: 45,
+    padding: 15,
+    borderRadius: 20,
+    shadowOffset: { width: 3, height: 3 },
+    shadowColor: 'black',
+    shadowOpacity: 0.2
+  },
+  loadingGradientStyle: {
     justifyContent: 'center',
     backgroundColor: 'transparent',
     alignItems: 'center',
