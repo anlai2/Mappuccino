@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Divider,
+  Icon,
   Text as ElementText
 } from 'react-native-elements';
 import {
@@ -249,6 +250,24 @@ export default class TestScreen extends React.Component {
             </LinearGradient>
           </TouchableOpacity>
         </View>
+        <View style={styles.filterContainer}>
+          <TouchableOpacity
+            style={{ alignItems: 'center', justifyContent: 'center' }}
+            onPress={this.onButtonPress}
+          >
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+            >
+              <Icon
+                type="entypo"
+                name="chevron-thin-up"
+                color="black"
+                size={18}
+              />
+              <Text style={styles.filterButtonStyle}> Filter</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -262,13 +281,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0
+  },
+  filterContainer: {
+    position: 'absolute',
     bottom: 20,
     left: 0,
     right: 0
   },
   scrollView: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 60,
     left: 0,
     right: 0,
     paddingVertical: 10,
@@ -334,6 +359,10 @@ const styles = StyleSheet.create({
   },
   searchButtonStyle: {
     color: 'white'
+  },
+  filterButtonStyle: {
+    color: 'black',
+    fontSize: 16
   },
   searchGradientStyle: {
     justifyContent: 'center',
