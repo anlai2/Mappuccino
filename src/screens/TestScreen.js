@@ -30,29 +30,31 @@ const CARD_WIDTH = width - 100;
 export default class TestScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      region: {
+        longitude: -122.45213824240618,
+        latitude: 37.738948026999054,
+        longitudeDelta: 0.0015,
+        latitudeDelta: 0.0015
+      },
+      coffeeShops: {},
+      filter: {
+        price: !_.isNull(this.props.filterData.filter.price)
+          ? this.props.filterData.filter.price
+          : []
+      }
+    };
   }
 
   // Component's state, cannot be accessed cross screens
   // Good for data that is minimal
   // this.state.region refers to the object
   // this.setState({ region: data }) to change the state
-  state = {
-    region: {
-      longitude: -122.45213824240618,
-      latitude: 37.738948026999054,
-      longitudeDelta: 0.0015,
-      latitudeDelta: 0.0015
-    },
-    coffeeShops: {},
-    filter: {
-      price: !_.isNull(this.props.filter.price) ? this.props.filter.price : []
-    }
-  };
 
   componentWillReceiveProps(nextProps) {
     console.log('THIS IS NEXT PROPS');
     console.log(nextProps);
-    this.setState({ filter: nextProps.filter });
+    this.setState({ filter: nextProps.filterData.filter });
     console.log('THIS IS NEXT PROPS');
   }
 
@@ -102,7 +104,6 @@ export default class TestScreen extends React.Component {
   // ES6 function that is ran when we call it on a UI
   // We are calling it on the onPress property of Button in the render method
   onButtonPress = () => {
-    console.log(this.state.filter.price);
     fetch(
       `https://api.yelp.com/v3/businesses/search?&latitude=${
         this.state.region.latitude
@@ -193,7 +194,6 @@ export default class TestScreen extends React.Component {
 
   // Main aspect of a react component, essentially handles what is to be displayed
   render() {
-    console.log(this.props);
     return (
       // Most components/screens must have a root tag, here it is a View tag
       <View style={styles.container}>
@@ -273,7 +273,9 @@ export default class TestScreen extends React.Component {
         <View style={styles.filterContainer}>
           <TouchableOpacity
             style={{ alignItems: 'center', justifyContent: 'center' }}
-            onPress={() => Actions.filter()}
+            onPress={() =>
+              Actions.filter({ refresh: { filterData: this.props.filterData } })
+            }
           >
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-around' }}
@@ -294,8 +296,10 @@ export default class TestScreen extends React.Component {
 }
 
 TestScreen.defaultProps = {
-  filter: {
-    price: null
+  filterData: {
+    filter: {
+      price: null
+    }
   }
 };
 

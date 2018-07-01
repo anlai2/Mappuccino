@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Icon, Button, Card } from 'react-native-elements';
@@ -15,14 +16,22 @@ class FilterModal extends Component {
 
   state = {
     filter: {
-      price: []
+      price: _.isNull(
+        this.props.navigation.state.params.refresh.filterData.filter.price
+      )
+        ? []
+        : this.props.navigation.state.params.refresh.filterData.filter.price
     },
-    priceOne: false,
-    priceTwo: false
-  };
-
-  handleFinishFilter = () => {
-    Actions.pop({ refresh: { filter: this.state.filter } });
+    priceOne: _.isNull(
+      this.props.navigation.state.params.refresh.filterData.priceOne
+    )
+      ? false
+      : this.props.navigation.state.params.refresh.filterData.priceOne,
+    priceTwo: _.isNull(
+      this.props.navigation.state.params.refresh.filterData.priceTwo
+    )
+      ? false
+      : this.props.navigation.state.params.refresh.filterData.priceTwo
   };
 
   priceFilterOne = () => {
@@ -54,12 +63,15 @@ class FilterModal extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.onBackContainer}>
-            <TouchableOpacity onPress={() => this.handleFinishFilter}>
+            <TouchableOpacity
+              onPress={() =>
+                Actions.pop({ refresh: { filterData: this.state } })
+              }
+            >
               <Icon
                 type="entypo"
                 name="chevron-thin-down"
@@ -87,7 +99,7 @@ class FilterModal extends Component {
               </View>
               <View style={styles.priceButtonStyle}>
                 <Button
-                  title={'$$'}
+                  title="$$"
                   buttonStyle={
                     this.state.priceTwo
                       ? styles.onPriceButtonStyle
@@ -104,6 +116,16 @@ class FilterModal extends Component {
     );
   }
 }
+
+FilterModal.defaultProps = {
+  filterData: {
+    filter: {
+      price: [],
+      priceOne: null,
+      priceTwo: null
+    }
+  }
+};
 
 const styles = {
   container: {
