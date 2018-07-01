@@ -28,19 +28,35 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = width - 100;
 
 export default class TestScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      region: {
+        longitude: -122.45213824240618,
+        latitude: 37.738948026999054,
+        longitudeDelta: 0.0015,
+        latitudeDelta: 0.0015
+      },
+      coffeeShops: {},
+      filter: {
+        price: !_.isNull(this.props.filterData.filter.price)
+          ? this.props.filterData.filter.price
+          : []
+      }
+    };
+  }
+
   // Component's state, cannot be accessed cross screens
   // Good for data that is minimal
   // this.state.region refers to the object
   // this.setState({ region: data }) to change the state
-  state = {
-    region: {
-      longitude: -122.45213824240618,
-      latitude: 37.738948026999054,
-      longitudeDelta: 0.0015,
-      latitudeDelta: 0.0015
-    },
-    coffeeShops: {}
-  };
+
+  componentWillReceiveProps(nextProps) {
+    console.log('THIS IS NEXT PROPS');
+    console.log(nextProps);
+    this.setState({ filter: nextProps.filterData.filter });
+    console.log('THIS IS NEXT PROPS');
+  }
 
   componentDidMount() {
     this.animation.addListener(({ value }) => {
@@ -93,7 +109,9 @@ export default class TestScreen extends React.Component {
         this.state.region.latitude
       }&longitude=${
         this.state.region.longitude
-      }&open_now=true&term=coffee&radius=2500&offset=25&sort_by=distance`,
+      }&open_now=true&term=coffee&radius=2500&offset=25&sort_by=distance&price=${this.state.filter.price.join(
+        ','
+      )}`,
       {
         method: 'GET',
         headers: {
@@ -104,10 +122,11 @@ export default class TestScreen extends React.Component {
     )
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         this.setState({ coffeeShops: data.businesses });
-        console.log(data.businesses[0].image_url);
       })
-      .then(() => this.renderCards());
+      .then(() => this.renderCards())
+      .catch(err => console.log(err));
   };
 
   renderCards = () => {
@@ -220,7 +239,7 @@ export default class TestScreen extends React.Component {
                     onPress={() => Linking.openURL(shop.url)}
                   >
                     <Card
-                      featuredTitle={shop.name}
+                      featuredTitle={shop.name + shop.price}
                       featuredTitleStyle={styles.featuredTitleStyle}
                       image={{
                         uri: shop.image_url
@@ -254,7 +273,9 @@ export default class TestScreen extends React.Component {
         <View style={styles.filterContainer}>
           <TouchableOpacity
             style={{ alignItems: 'center', justifyContent: 'center' }}
-            onPress={() => Actions.filter()}
+            onPress={() =>
+              Actions.filter({ refresh: { filterData: this.props.filterData } })
+            }
           >
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-around' }}
@@ -273,6 +294,14 @@ export default class TestScreen extends React.Component {
     );
   }
 }
+
+TestScreen.defaultProps = {
+  filterData: {
+    filter: {
+      price: null
+    }
+  }
+};
 
 // We can create a styles object to keep track of multiple styles
 // Can also be implemented in the JSX tag, but this way is cleaner
