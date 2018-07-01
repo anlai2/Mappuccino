@@ -18,6 +18,7 @@ import {
   Image,
   Dimensions
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
@@ -253,7 +254,7 @@ export default class TestScreen extends React.Component {
         <View style={styles.filterContainer}>
           <TouchableOpacity
             style={{ alignItems: 'center', justifyContent: 'center' }}
-            onPress={this.onButtonPress}
+            onPress={() => Actions.filter()}
           >
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-around' }}
