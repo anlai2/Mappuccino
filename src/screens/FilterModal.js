@@ -41,6 +41,20 @@ class FilterModal extends Component {
     }
   };
 
+  priceFilterTwo = () => {
+    if (this.state.priceTwo) {
+      this.state.filter.price.pop();
+      this.setState({
+        priceTwo: false
+      });
+    } else {
+      this.state.filter.price.push(2);
+      this.setState({
+        priceTwo: true
+      });
+    }
+  };
+
   render() {
     console.log(this.state);
     return (
@@ -74,6 +88,7 @@ class FilterModal extends Component {
                   title={'$$'}
                   buttonStyle={styles.offPriceButtonStyle}
                   textStyle={{ color: 'black' }}
+                  onPress={this.priceFilterTwo}
                 />
               </View>
             </View>
