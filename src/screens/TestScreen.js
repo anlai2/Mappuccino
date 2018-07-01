@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { MapView, Marker, Linking } from 'expo';
+import { MapView, Marker, Linking, LinearGradient } from 'expo';
 import {
   Button,
   Card,
@@ -212,39 +212,42 @@ export default class TestScreen extends React.Component {
         >
           {!_.isEmpty(this.state.coffeeShops)
             ? this.state.coffeeShops.map((shop, index) => (
-              <View style={styles.card} key={index}>
-                <TouchableOpacity
-                  useForeground
-                  onPress={() => Linking.openURL(shop.url)}
-                >
-                  <Card
-                    featuredTitle={shop.name}
-                    featuredTitleStyle={styles.featuredTitleStyle}
-                    image={{
-                      uri: shop.image_url
-                    }}
+                <View style={styles.card} key={index}>
+                  <TouchableOpacity
+                    useForeground
+                    onPress={() => Linking.openURL(shop.url)}
                   >
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
+                    <Card
+                      featuredTitle={shop.name}
+                      featuredTitleStyle={styles.featuredTitleStyle}
+                      image={{
+                        uri: shop.image_url
                       }}
                     >
-                    </View>
-                  </Card>
-                </TouchableOpacity>
-              </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between'
+                        }}
+                      />
+                    </Card>
+                  </TouchableOpacity>
+                </View>
               ))
             : null}
         </Animated.ScrollView>
         <View style={styles.buttonContainer}>
-          <Button
-            title="Find Coffee"
-            backgroundColor="brown"
-            icon={{ name: 'search' }}
+          <TouchableOpacity
+            style={{ alignItems: 'center', justifyContent: 'center' }}
             onPress={this.onButtonPress}
-            buttonStyle={{ borderRadius: 10 }}
-          />
+          >
+            <LinearGradient
+              style={styles.searchGradientStyle}
+              colors={['#86592d', '#ac7339', '#c68c53']}
+            >
+              <Text style={styles.searchButtonStyle}>Search Coffee</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#630808',
+    backgroundColor: '#4d2600',
     position: 'absolute',
     borderWidth: 1,
     borderColor: 'brown'
@@ -328,5 +331,20 @@ const styles = StyleSheet.create({
   noteStyle: {
     margin: 5,
     fontSize: 16
+  },
+  searchButtonStyle: {
+    color: 'white'
+  },
+  searchGradientStyle: {
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    width: 300,
+    height: 45,
+    padding: 15,
+    borderRadius: 20,
+    shadowOffset: { width: 3, height: 3 },
+    shadowColor: 'black',
+    shadowOpacity: 0.2
   }
 });
