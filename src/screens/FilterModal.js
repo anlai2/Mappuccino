@@ -32,10 +32,8 @@ class FilterModal extends Component {
         priceOne: false
       });
     } else {
+      this.state.filter.price.unshift(1);
       this.setState({
-        filter: {
-          price: [this.state.filter.price.unshift(1)]
-        },
         priceOne: true
       });
     }
@@ -79,14 +77,22 @@ class FilterModal extends Component {
                 <Button
                   title="$"
                   textStyle={{ color: 'black' }}
-                  buttonStyle={styles.offPriceButtonStyle}
+                  buttonStyle={
+                    this.state.priceOne
+                      ? styles.onPriceButtonStyle
+                      : styles.offPriceButtonStyle
+                  }
                   onPress={this.priceFilterOne}
                 />
               </View>
               <View style={styles.priceButtonStyle}>
                 <Button
                   title={'$$'}
-                  buttonStyle={styles.offPriceButtonStyle}
+                  buttonStyle={
+                    this.state.priceTwo
+                      ? styles.onPriceButtonStyle
+                      : styles.offPriceButtonStyle
+                  }
                   textStyle={{ color: 'black' }}
                   onPress={this.priceFilterTwo}
                 />
@@ -137,7 +143,7 @@ const styles = {
     backgroundColor: '#D3D3D3'
   },
   onPriceButtonStyle: {
-    backgroundColor: 'brown'
+    backgroundColor: '#86592d'
   }
 };
 
