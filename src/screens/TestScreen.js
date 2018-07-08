@@ -26,7 +26,7 @@ const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 const { width, height } = Dimensions.get('window');
 
 const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = width - 100;
+const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
   constructor(props) {
@@ -248,6 +248,7 @@ export default class TestScreen extends React.Component {
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
           snapToAlignment={'center'}
+          snapToInterval={CARD_WIDTH + 20}
           overScrollMode={'never'}
           onScroll={Animated.event(
             [
