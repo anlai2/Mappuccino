@@ -20,6 +20,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import StarRating from 'react-native-star-rating';
 
 const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
@@ -267,19 +268,79 @@ export default class TestScreen extends React.Component {
         >
           {!_.isEmpty(this.state.coffeeShops)
             ? this.state.coffeeShops.map((shop, index) => (
-                <View style={styles.card} key={index}>
-                  <TouchableOpacity
-                    useForeground
-                    onPress={() => Linking.openURL(shop.url)}
+                <View
+                  key={index}
+                  style={styles.card}
+                  // title={shop.name + shop.price}
+                  // titleStyle={{ alignContent: 'flex-start' }}
+                  // image={{
+                  //   uri: shop.image_url
+                  // }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row'
+                    }}
                   >
-                    <Card
-                      featuredTitle={shop.name + shop.price}
-                      featuredTitleStyle={styles.featuredTitleStyle}
-                      image={{
-                        uri: shop.image_url
+                    <View
+                      style={{
+                        padding: 5
                       }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        {shop.name}
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignContent: 'flex-end'
+                        }}
+                      >
+                        <Text>{shop.price + '    '}</Text>
+                        <StarRating
+                          maxStars={5}
+                          disabled
+                          rating={shop.rating}
+                          starSize={18}
+                          fullStarColor={'#ac7339'}
+                          emptyStarColor={'#86592d'}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          paddingTop: 10,
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Image
+                          resizeMode={'cover'}
+                          style={{
+                            width: CARD_WIDTH - 175,
+                            height: CARD_HEIGHT - 25
+                          }}
+                          source={{ uri: shop.image_url }}
+                        />
+                      </View>
+                    </View>
+                    {/* <View
+                    style={{
+                      justifyContent: 'space-between',
+                      paddingTop: 10,
+                      flexDirection: 'row'
+                    }}
+                  >
+                    <Button
+                      backgroundColor="rgb(0, 122, 255)"
+                      title="Directions"
+                      icon={{ name: 'directions' }}
+                      buttonStyle={{ borderRadius: 10, height: 42 }}
                     />
-                  </TouchableOpacity>
+                  </View> */}
+                  </View>
                 </View>
               ))
             : null}
@@ -381,16 +442,16 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'brown'
+    backgroundColor: '#86592d'
   },
   ring: {
-    width: 24,
-    height: 24,
+    width: 18,
+    height: 18,
     borderRadius: 12,
-    backgroundColor: '#4d2600',
+    backgroundColor: '#ac7339',
     position: 'absolute',
     borderWidth: 1,
-    borderColor: 'brown'
+    borderColor: '#86592d'
   },
   featuredTitleStyle: {
     marginHorizontal: 5,
