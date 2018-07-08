@@ -278,14 +278,7 @@ export default class TestScreen extends React.Component {
                       image={{
                         uri: shop.image_url
                       }}
-                    >
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between'
-                        }}
-                      />
-                    </Card>
+                    />
                   </TouchableOpacity>
                 </View>
               ))
