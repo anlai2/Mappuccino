@@ -322,13 +322,18 @@ export default class TestScreen extends React.Component {
                           resizeMode={'cover'}
                           style={{
                             width: CARD_WIDTH - 175,
-                            height: CARD_HEIGHT - 25
+                            height: CARD_HEIGHT - 75
                           }}
                           source={{ uri: shop.image_url }}
                         />
                       </View>
                     </View>
-                    <View style={{ alignContent: 'space-around' }}>
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        justifyContent: 'space-evenly'
+                      }}
+                    >
                       <Button
                         backgroundColor="rgb(76, 217, 100)"
                         title="Call"
@@ -444,8 +449,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
     height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    overflow: 'hidden'
+    width: CARD_WIDTH
   },
   textContent: {
     flex: 1,
