@@ -41,6 +41,7 @@ export default class TestScreen extends React.Component {
         longitudeDelta: 0.0015,
         latitudeDelta: 0.0015
       },
+      currentRegion: {},
       coffeeShops: {},
       filter: {
         price: !_.isNull(this.props.filterData.filter.price)
@@ -98,6 +99,11 @@ export default class TestScreen extends React.Component {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         region: {
+          ...position.coords,
+          longitudeDelta: 0.015,
+          latitudeDelta: 0.015
+        },
+        currentRegion: {
           ...position.coords,
           longitudeDelta: 0.015,
           latitudeDelta: 0.015
@@ -355,7 +361,13 @@ export default class TestScreen extends React.Component {
                                   ' '
                                 )}`
                               )
-                            : console.log('ANDROID');
+                            : Linking.openURL(
+                                `comgooglemaps://?saddr=${
+                                  this.state.currentRegion.latitude
+                                },${this.state.currentRegion.longitude}&daddr=${
+                                  shop.coordinates.latitude
+                                },${shop.coordinates.longitude}`
+                              );
                         }}
                       />
                     </View>
