@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { MapView, Marker, Linking, LinearGradient } from 'expo';
+import { MapView, Marker, LinearGradient } from 'expo';
 import {
   Button,
   Card,
@@ -17,7 +17,9 @@ import {
   Animated,
   Image,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform,
+  Linking
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import StarRating from 'react-native-star-rating';
@@ -325,6 +327,30 @@ export default class TestScreen extends React.Component {
                           source={{ uri: shop.image_url }}
                         />
                       </View>
+                    </View>
+                    <View style={{ alignContent: 'space-around' }}>
+                      <Button
+                        backgroundColor="rgb(76, 217, 100)"
+                        title="Call"
+                        icon={{ name: 'phone' }}
+                        buttonStyle={{ borderRadius: 10, height: 42 }}
+                        onPress={() => Linking.openURL(`tel:${shop.phone}`)}
+                      />
+                      <Button
+                        backgroundColor="rgb(0, 122, 255)"
+                        title="Directions"
+                        icon={{ name: 'directions' }}
+                        buttonStyle={{ borderRadius: 10, height: 42 }}
+                        onPress={() => {
+                          Platform.OS === 'ios'
+                            ? Linking.openURL(
+                                `http://maps.apple.com/?address=${shop.location.display_address.join(
+                                  ' '
+                                )}`
+                              )
+                            : console.log('ANDROID');
+                        }}
+                      />
                     </View>
                     {/* <View
                     style={{
