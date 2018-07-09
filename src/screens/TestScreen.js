@@ -286,7 +286,8 @@ export default class TestScreen extends React.Component {
                   >
                     <View
                       style={{
-                        padding: 5
+                        padding: 5,
+                        flex: 1
                       }}
                     >
                       <Text
@@ -331,7 +332,8 @@ export default class TestScreen extends React.Component {
                     <View
                       style={{
                         flexDirection: 'column',
-                        justifyContent: 'space-evenly'
+                        justifyContent: 'space-evenly',
+                        paddingTop: 20
                       }}
                     >
                       <Button
