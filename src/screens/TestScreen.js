@@ -256,6 +256,7 @@ export default class TestScreen extends React.Component {
           horizontal
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
+          decelerationRate={'fast'}
           snapToAlignment={'center'}
           snapToInterval={CARD_WIDTH + 20}
           overScrollMode={'never'}
