@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { MapView, Marker, Linking, LinearGradient } from 'expo';
+import { MapView, Marker, LinearGradient } from 'expo';
 import {
   Button,
   Card,
@@ -17,9 +17,12 @@ import {
   Animated,
   Image,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform,
+  Linking
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import StarRating from 'react-native-star-rating';
 
 const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
@@ -38,6 +41,7 @@ export default class TestScreen extends React.Component {
         longitudeDelta: 0.0015,
         latitudeDelta: 0.0015
       },
+      currentRegion: {},
       coffeeShops: {},
       filter: {
         price: !_.isNull(this.props.filterData.filter.price)
@@ -95,6 +99,11 @@ export default class TestScreen extends React.Component {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         region: {
+          ...position.coords,
+          longitudeDelta: 0.015,
+          latitudeDelta: 0.015
+        },
+        currentRegion: {
           ...position.coords,
           longitudeDelta: 0.015,
           latitudeDelta: 0.015
@@ -247,6 +256,7 @@ export default class TestScreen extends React.Component {
           horizontal
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
+          decelerationRate={'fast'}
           snapToAlignment={'center'}
           snapToInterval={CARD_WIDTH + 20}
           overScrollMode={'never'}
@@ -267,26 +277,116 @@ export default class TestScreen extends React.Component {
         >
           {!_.isEmpty(this.state.coffeeShops)
             ? this.state.coffeeShops.map((shop, index) => (
-                <View style={styles.card} key={index}>
-                  <TouchableOpacity
-                    useForeground
-                    onPress={() => Linking.openURL(shop.url)}
+                <View
+                  key={index}
+                  style={styles.card}
+                  // title={shop.name + shop.price}
+                  // titleStyle={{ alignContent: 'flex-start' }}
+                  // image={{
+                  //   uri: shop.image_url
+                  // }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row'
+                    }}
                   >
-                    <Card
-                      featuredTitle={shop.name + shop.price}
-                      featuredTitleStyle={styles.featuredTitleStyle}
-                      image={{
-                        uri: shop.image_url
+                    <View
+                      style={{
+                        padding: 5,
+                        flex: 1
                       }}
                     >
+                      <Text
+                        style={{
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        {shop.name}
+                      </Text>
                       <View
                         style={{
                           flexDirection: 'row',
-                          justifyContent: 'space-between'
+                          alignContent: 'flex-end'
+                        }}
+                      >
+                        <Text>{shop.price + '    '}</Text>
+                        <StarRating
+                          maxStars={5}
+                          disabled
+                          rating={shop.rating}
+                          starSize={18}
+                          fullStarColor={'#ac7339'}
+                          emptyStarColor={'#86592d'}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          paddingTop: 10,
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Image
+                          resizeMode={'cover'}
+                          style={{
+                            width: CARD_WIDTH - 175,
+                            height: CARD_HEIGHT - 75
+                          }}
+                          source={{ uri: shop.image_url }}
+                        />
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        justifyContent: 'space-evenly',
+                        paddingTop: 20
+                      }}
+                    >
+                      <Button
+                        backgroundColor="rgb(76, 217, 100)"
+                        title="Call"
+                        icon={{ name: 'phone' }}
+                        buttonStyle={{ borderRadius: 10, height: 42 }}
+                        onPress={() => Linking.openURL(`tel:${shop.phone}`)}
+                      />
+                      <Button
+                        backgroundColor="rgb(0, 122, 255)"
+                        title="Directions"
+                        icon={{ name: 'directions' }}
+                        buttonStyle={{ borderRadius: 10, height: 42 }}
+                        onPress={() => {
+                          Platform.OS === 'ios'
+                            ? Linking.openURL(
+                                `http://maps.apple.com/?address=${shop.location.display_address.join(
+                                  ' '
+                                )}`
+                              )
+                            : Linking.openURL(
+                                `comgooglemaps://?saddr=${
+                                  this.state.currentRegion.latitude
+                                },${this.state.currentRegion.longitude}&daddr=${
+                                  shop.coordinates.latitude
+                                },${shop.coordinates.longitude}`
+                              );
                         }}
                       />
-                    </Card>
-                  </TouchableOpacity>
+                    </View>
+                    {/* <View
+                    style={{
+                      justifyContent: 'space-between',
+                      paddingTop: 10,
+                      flexDirection: 'row'
+                    }}
+                  >
+                    <Button
+                      backgroundColor="rgb(0, 122, 255)"
+                      title="Directions"
+                      icon={{ name: 'directions' }}
+                      buttonStyle={{ borderRadius: 10, height: 42 }}
+                    />
+                  </View> */}
+                  </View>
                 </View>
               ))
             : null}
@@ -364,8 +464,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
     height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    overflow: 'hidden'
+    width: CARD_WIDTH
   },
   textContent: {
     flex: 1,
@@ -388,16 +487,16 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'brown'
+    backgroundColor: '#86592d'
   },
   ring: {
-    width: 24,
-    height: 24,
+    width: 18,
+    height: 18,
     borderRadius: 12,
-    backgroundColor: '#4d2600',
+    backgroundColor: '#ac7339',
     position: 'absolute',
     borderWidth: 1,
-    borderColor: 'brown'
+    borderColor: '#86592d'
   },
   featuredTitleStyle: {
     marginHorizontal: 5,
