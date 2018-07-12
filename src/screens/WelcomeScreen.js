@@ -15,6 +15,13 @@ class WelcomeScreen extends Component {
           backgroundColor: '#FFFFFF'
         }}
       >
+        <View style={{ padding: 25 }}>
+          <Text
+            style={{ textAlign: 'center', fontWeight: '500', fontSize: 48 }}
+          >
+            Mappuccino
+          </Text>
+        </View>
         <Image
           source={WelcomeImage}
           style={{
