@@ -2,6 +2,7 @@ import React from 'react';
 import { Scene, Router, Actions, Stack, Modal } from 'react-native-router-flux';
 import MapScreen from './screens/MapScreen';
 import TestScreen from './screens/TestScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
 import FilterModal from './screens/FilterModal';
 
 // Component that we call in Home.js, when called we go through the stack and we see that
@@ -9,8 +10,9 @@ import FilterModal from './screens/FilterModal';
 const RouterComponent = () => (
   <Router>
     <Modal>
+      <Scene key="welcome" hideNavBar component={WelcomeScreen} initial />
       <Scene key="root" hideNavbar>
-        <Scene key="map" hideNavBar component={TestScreen} initial />
+        <Scene key="map" hideNavBar component={TestScreen} />
       </Scene>
       <Scene key="filter" hideNavBar component={FilterModal} />
     </Modal>
