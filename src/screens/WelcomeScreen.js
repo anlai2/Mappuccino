@@ -26,7 +26,7 @@ class WelcomeScreen extends Component {
         />
         <View style={{ padding: 25 }}>
           <Text
-            style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 25 }}
+            style={{ textAlign: 'center', fontWeight: '500', fontSize: 25 }}
           >
             Find coffee shops near you with a single button!
           </Text>
