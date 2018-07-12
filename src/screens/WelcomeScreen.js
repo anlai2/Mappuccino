@@ -12,7 +12,7 @@ class WelcomeScreen extends Component {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'space-evenly',
-          backgroundColor: '#FFD618'
+          backgroundColor: '#FFFFFF'
         }}
       >
         <Image
