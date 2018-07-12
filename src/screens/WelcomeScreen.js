@@ -17,7 +17,7 @@ class WelcomeScreen extends Component {
       >
         <View style={{ padding: 25 }}>
           <Text
-            style={{ textAlign: 'center', fontWeight: '500', fontSize: 25 }}
+            style={{ textAlign: 'center', fontWeight: '500', fontSize: 48 }}
           >
             Mappuccino
           </Text>
