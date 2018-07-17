@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import { Icon, Button, Card } from 'react-native-elements';
+import { Text, View, TouchableOpacity, Dimensions, Switch } from 'react-native';
+import { Icon, Button, Card, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 const { width, height } = Dimensions.get('window');
@@ -12,27 +12,22 @@ const CARD_WIDTH = width - 75;
 class FilterModal extends Component {
   constructor(props) {
     super(props);
-  }
+    const {
+      filter,
+      priceOne,
+      priceTwo,
+      openNow
+    } = this.props.navigation.state.params.refresh.filterData;
 
-  state = {
-    filter: {
-      price: _.isNull(
-        this.props.navigation.state.params.refresh.filterData.filter.price
-      )
-        ? []
-        : this.props.navigation.state.params.refresh.filterData.filter.price
-    },
-    priceOne: _.isNull(
-      this.props.navigation.state.params.refresh.filterData.priceOne
-    )
-      ? false
-      : this.props.navigation.state.params.refresh.filterData.priceOne,
-    priceTwo: _.isNull(
-      this.props.navigation.state.params.refresh.filterData.priceTwo
-    )
-      ? false
-      : this.props.navigation.state.params.refresh.filterData.priceTwo
-  };
+    this.state = {
+      filter: {
+        price: _.isNull(filter.price) ? [] : filter.price
+      },
+      priceOne: _.isNull(priceOne) ? false : priceOne,
+      priceTwo: _.isNull(priceTwo) ? false : priceTwo,
+      openNow: true
+    };
+  }
 
   priceFilterOne = () => {
     if (this.state.priceOne) {
@@ -62,6 +57,12 @@ class FilterModal extends Component {
     }
   };
 
+  handleOpenNow = () => {
+    this.setState({
+      openNow: !this.state.openNow
+    });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -81,11 +82,15 @@ class FilterModal extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.priceContainer}>
-          <Card title="Filter Search" wrapperStyle={{ alignItems: 'center' }}>
-            <Text style={{ fontSize: 18 }}>Price</Text>
-            <View style={styles.priceButtonContainer}>
-              <View style={styles.priceButtonStyle}>
+        <View>
+          <Card title="Filter Search">
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <Text style={{ fontSize: 24 }}>Price</Text>
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+              >
                 <Button
                   title="$"
                   textStyle={{ color: 'black' }}
@@ -96,8 +101,6 @@ class FilterModal extends Component {
                   }
                   onPress={this.priceFilterOne}
                 />
-              </View>
-              <View style={styles.priceButtonStyle}>
                 <Button
                   title="$$"
                   buttonStyle={
@@ -109,6 +112,17 @@ class FilterModal extends Component {
                   onPress={this.priceFilterTwo}
                 />
               </View>
+            </View>
+            <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <Text style={{ fontSize: 24 }}>Open Now</Text>
+              <Switch
+                onValueChange={this.handleOpenNow}
+                onTintColor={'#86592d'}
+                value={this.state.openNow}
+              />
             </View>
           </Card>
         </View>
@@ -143,11 +157,6 @@ const styles = {
   },
   onBackContainer: {
     backgroundColor: '#ac7339'
-  },
-  priceContainer: {
-    paddingTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   priceButtonContainer: {
     height: 60,
