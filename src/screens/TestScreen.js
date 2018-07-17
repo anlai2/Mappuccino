@@ -28,7 +28,7 @@ const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 4;
+const CARD_HEIGHT = height / 3.5;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
@@ -58,10 +58,7 @@ export default class TestScreen extends React.Component {
   // this.setState({ region: data }) to change the state
 
   componentWillReceiveProps(nextProps) {
-    console.log('THIS IS NEXT PROPS');
-    console.log(nextProps);
     this.setState({ filter: nextProps.filterData.filter });
-    console.log('THIS IS NEXT PROPS');
   }
 
   componentDidMount() {
@@ -249,6 +246,7 @@ export default class TestScreen extends React.Component {
           showsBuildings={false}
           showsPointsOfInterest={false}
           loadingIndicatorColor="brown"
+          cacheEnable={Platform.OS === 'android'}
         >
           {!_.isEmpty(this.state.coffeeShops) ? this.renderShops() : null}
         </MapView>
@@ -340,7 +338,7 @@ export default class TestScreen extends React.Component {
                       style={{
                         flexDirection: 'column',
                         justifyContent: 'space-evenly',
-                        paddingTop: 20
+                        paddingBottom: 10
                       }}
                     >
                       <Button
@@ -371,21 +369,14 @@ export default class TestScreen extends React.Component {
                               );
                         }}
                       />
+                      <Button
+                        backgroundColor="#3b5998"
+                        title="More Info"
+                        icon={{ name: 'info' }}
+                        buttonStyle={{ borderRadius: 10, height: 42 }}
+                        onPress={() => Actions.info({ shop })}
+                      />
                     </View>
-                    {/* <View
-                    style={{
-                      justifyContent: 'space-between',
-                      paddingTop: 10,
-                      flexDirection: 'row'
-                    }}
-                  >
-                    <Button
-                      backgroundColor="rgb(0, 122, 255)"
-                      title="Directions"
-                      icon={{ name: 'directions' }}
-                      buttonStyle={{ borderRadius: 10, height: 42 }}
-                    />
-                  </View> */}
                   </View>
                 </View>
               ))
