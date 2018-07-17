@@ -6,10 +6,6 @@ import { Actions } from 'react-native-router-flux';
 import StarRating from 'react-native-star-rating';
 
 class InfoModal extends Component {
-  componentDidMount() {
-    console.log(this.props.shop);
-  }
-
   render() {
     const {
       image_url,

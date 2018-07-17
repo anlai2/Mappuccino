@@ -59,6 +59,7 @@ export default class TestScreen extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ filter: nextProps.filterData.filter });
+    console.log(nextProps);
   }
 
   componentDidMount() {
@@ -131,7 +132,6 @@ export default class TestScreen extends React.Component {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ coffeeShops: data.businesses });
       })
       .then(() => this.renderCards())

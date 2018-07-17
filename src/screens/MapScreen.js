@@ -103,7 +103,6 @@ export default class MapScreen extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ coffeeShops: data.businesses });
-        console.log(data.businesses[0].image_url);
       })
       .then(() => this.renderCards());
   };
@@ -212,28 +211,27 @@ export default class MapScreen extends React.Component {
         >
           {!_.isEmpty(this.state.coffeeShops)
             ? this.state.coffeeShops.map((shop, index) => (
-              <View style={styles.card} key={index}>
-                <TouchableOpacity
-                  useForeground
-                  onPress={() => Linking.openURL(shop.url)}
-                >
-                  <Card
-                    featuredTitle={shop.name}
-                    featuredTitleStyle={styles.featuredTitleStyle}
-                    image={{
-                      uri: shop.image_url
-                    }}
+                <View style={styles.card} key={index}>
+                  <TouchableOpacity
+                    useForeground
+                    onPress={() => Linking.openURL(shop.url)}
                   >
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
+                    <Card
+                      featuredTitle={shop.name}
+                      featuredTitleStyle={styles.featuredTitleStyle}
+                      image={{
+                        uri: shop.image_url
                       }}
                     >
-                    </View>
-                  </Card>
-                </TouchableOpacity>
-              </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between'
+                        }}
+                      />
+                    </Card>
+                  </TouchableOpacity>
+                </View>
               ))
             : null}
         </Animated.ScrollView>
