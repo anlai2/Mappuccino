@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { Icon, Button, Card } from 'react-native-elements';
+import { Text, View, TouchableOpacity, Linking } from 'react-native';
+import { MapView, Marker } from 'expo';
+import { Icon, Button, Card, Image } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import StarRating from 'react-native-star-rating';
 
 class InfoModal extends Component {
   componentDidMount() {
@@ -9,6 +11,15 @@ class InfoModal extends Component {
   }
 
   render() {
+    const {
+      image_url,
+      name,
+      rating,
+      phone,
+      display_phone,
+      price
+    } = this.props.shop;
+
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -23,6 +34,33 @@ class InfoModal extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        <Card image={{ uri: image_url }}>
+          <View
+            style={{ flexDirection: 'column', justifyContent: 'space-around' }}
+          >
+            <Text style={styles.titleStyle}>{name}</Text>
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <StarRating
+                maxStars={5}
+                disabled
+                rating={rating}
+                starSize={18}
+                fullStarColor={'#ac7339'}
+                emptyStarColor={'#86592d'}
+              />
+              <Text>{price}</Text>
+            </View>
+            <TouchableOpacity onPress={() => Linking.openURL(`tel:${phone}`)}>
+              <Text
+                style={{ color: '#0645AD', textDecorationLine: 'underline' }}
+              >
+                {display_phone}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Card>
       </View>
     );
   }
@@ -44,6 +82,10 @@ const styles = {
   },
   onBackContainer: {
     backgroundColor: '#ac7339'
+  },
+  titleStyle: {
+    fontSize: 24,
+    fontWeight: '300'
   }
 };
 
