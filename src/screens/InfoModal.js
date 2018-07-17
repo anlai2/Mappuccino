@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, TouchableOpacity, Linking, Platform } from 'react-native';
 import { MapView, Marker } from 'expo';
 import { Icon, Button, Card, Image } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
@@ -17,7 +17,8 @@ class InfoModal extends Component {
       rating,
       phone,
       display_phone,
-      price
+      price,
+      coordinates
     } = this.props.shop;
 
     return (
@@ -59,6 +60,25 @@ class InfoModal extends Component {
                 {display_phone}
               </Text>
             </TouchableOpacity>
+            <View style={{ height: 200, paddingTop: 20 }}>
+              <MapView
+                style={{ flex: 1 }}
+                initialRegion={{
+                  latitude: coordinates.latitude,
+                  longitude: coordinates.longitude,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.015
+                }}
+                showsUserLocation={true}
+                loadingEnabled={true}
+                showsBuildings={false}
+                showsPointsOfInterest={false}
+                loadingIndicatorColor="brown"
+                cacheEnable={Platform.OS === 'android'}
+              >
+                <MapView.Marker coordinate={coordinates} />
+              </MapView>
+            </View>
           </View>
         </Card>
       </View>

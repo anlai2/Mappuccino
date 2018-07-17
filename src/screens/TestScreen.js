@@ -246,6 +246,7 @@ export default class TestScreen extends React.Component {
           showsBuildings={false}
           showsPointsOfInterest={false}
           loadingIndicatorColor="brown"
+          cacheEnable={Platform.OS === 'android'}
         >
           {!_.isEmpty(this.state.coffeeShops) ? this.renderShops() : null}
         </MapView>
