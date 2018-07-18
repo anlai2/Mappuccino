@@ -404,7 +404,7 @@ export default class TestScreen extends React.Component {
                           paddingBottom: 10
                         }}
                       >
-                        <Text>TEST</Text>
+                        <Text />
                       </View>
                       <View
                         style={{
