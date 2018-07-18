@@ -544,7 +544,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   searchButtonStyle: {
-    color: 'white'
+    color: 'white',
+    fontSize: 16
   },
   filterButtonStyle: {
     color: 'black',
