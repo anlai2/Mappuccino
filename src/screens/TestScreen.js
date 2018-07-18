@@ -514,7 +514,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     shadowColor: '#000',
     shadowRadius: 5,
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.6,
     shadowOffset: { x: 2, y: -2 },
     height: CARD_HEIGHT,
     width: CARD_WIDTH
