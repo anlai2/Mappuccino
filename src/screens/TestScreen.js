@@ -397,7 +397,7 @@ export default class TestScreen extends React.Component {
                     <View
                       style={{
                         flexDirection: 'column',
-                        justifyContent: 'center',
+                        justifyContent: 'space-around',
                         alignItems: 'center',
                         paddingBottom: 10
                       }}
