@@ -214,7 +214,8 @@ export default class TestScreen extends React.Component {
             style={styles.searchGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
-            <Text style={styles.searchButtonStyle}>Search Coffee</Text>
+            <Icon type="font-awesome" name="search" color="white" size={16} />
+            <Text style={styles.searchButtonStyle}>Search Coffee in Area</Text>
           </LinearGradient>
         </TouchableOpacity>
       );
@@ -522,6 +523,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   searchGradientStyle: {
+    flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: 'transparent',
     alignItems: 'center',
