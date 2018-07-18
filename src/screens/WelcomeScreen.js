@@ -15,7 +15,7 @@ class WelcomeScreen extends Component {
           backgroundColor: '#FFFFFF'
         }}
       >
-        <View style={{ padding: 25 }}>
+        <View style={{ padding: 15 }}>
           <Text
             style={{ textAlign: 'center', fontWeight: '200', fontSize: 48 }}
           >
@@ -31,7 +31,7 @@ class WelcomeScreen extends Component {
             marginBottom: 10
           }}
         />
-        <View style={{ padding: 25 }}>
+        <View style={{ padding: 15 }}>
           <Text
             style={{ textAlign: 'center', fontWeight: '300', fontSize: 25 }}
           >
