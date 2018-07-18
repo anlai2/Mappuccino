@@ -28,7 +28,7 @@ const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 4;
+const CARD_HEIGHT = height / 3.9;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
@@ -321,8 +321,7 @@ export default class TestScreen extends React.Component {
                       </View>
                       <View
                         style={{
-                          paddingTop: 10,
-                          paddingBottom: 10
+                          paddingTop: 10
                         }}
                       >
                         <Image
@@ -333,6 +332,21 @@ export default class TestScreen extends React.Component {
                           }}
                           source={{ uri: shop.image_url }}
                         />
+                      </View>
+                      <View
+                        style={{
+                          marginTop: 4,
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start'
+                        }}
+                      >
+                        <Icon
+                          type="font-awesome"
+                          name="coffee"
+                          color="black"
+                          size={16}
+                        />
+                        <Text> ~75 mg</Text>
                       </View>
                     </View>
                     <View
