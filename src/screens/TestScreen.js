@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
   },
   filterButtonStyle: {
     color: 'black',
-    fontSize: 16
+    fontSize: 18
   },
   searchGradientStyle: {
     flexDirection: 'row',
