@@ -343,7 +343,7 @@ export default class TestScreen extends React.Component {
                     >
                       <Text
                         style={{
-                          fontWeight: 'bold'
+                          fontWeight: '500'
                         }}
                       >
                         {shop.name}
@@ -397,18 +397,59 @@ export default class TestScreen extends React.Component {
                     <View
                       style={{
                         flexDirection: 'column',
-                        justifyContent: 'space-evenly',
+                        justifyContent: 'space-around',
+                        alignItems: 'center',
                         paddingBottom: 10
                       }}
                     >
-                      <Button
+                      <TouchableOpacity
+                        onPress={() => Linking.openURL(`tel:${shop.phone}`)}
+                      >
+                        <Icon
+                          raised
+                          reverse
+                          name="phone"
+                          type="font-awesome"
+                          color="rgb(76, 217, 100)"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                      {/* <Button
                         backgroundColor="rgb(76, 217, 100)"
                         title="Call"
                         icon={{ name: 'phone' }}
                         buttonStyle={{ borderRadius: 10, height: 42 }}
                         onPress={() => Linking.openURL(`tel:${shop.phone}`)}
-                      />
-                      <Button
+                      /> */}
+                      <TouchableOpacity
+                        onPress={() => {
+                          Platform.OS === 'ios'
+                            ? Linking.openURL(
+                                `http://maps.apple.com/?saddr=${
+                                  this.state.currentAddress
+                                }&daddr=${shop.location.display_address.join(
+                                  ' '
+                                )}`
+                              )
+                            : Linking.openURL(
+                                `comgooglemaps://?saddr=${
+                                  this.state.currentRegion.latitude
+                                },${this.state.currentRegion.longitude}&daddr=${
+                                  shop.coordinates.latitude
+                                },${shop.coordinates.longitude}`
+                              );
+                        }}
+                      >
+                        <Icon
+                          raised
+                          reverse
+                          name="directions"
+                          type="material-icons"
+                          color="rgb(0, 122, 255)"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                      {/* <Button
                         backgroundColor="rgb(0, 122, 255)"
                         title="Directions"
                         icon={{ name: 'directions' }}
@@ -430,14 +471,24 @@ export default class TestScreen extends React.Component {
                                 },${shop.coordinates.longitude}`
                               );
                         }}
-                      />
-                      <Button
+                      /> */}
+                      <TouchableOpacity onPress={() => Actions.info({ shop })}>
+                        <Icon
+                          raised
+                          reverse
+                          name="info"
+                          type="foundation"
+                          color="#3b5998"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                      {/* <Button
                         backgroundColor="#3b5998"
                         title="More Info"
                         icon={{ name: 'info' }}
                         buttonStyle={{ borderRadius: 10, height: 42 }}
                         onPress={() => Actions.info({ shop })}
-                      />
+                      /> */}
                     </View>
                   </View>
                 </View>
@@ -514,7 +565,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     shadowColor: '#000',
     shadowRadius: 5,
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.6,
     shadowOffset: { x: 2, y: -2 },
     height: CARD_HEIGHT,
     width: CARD_WIDTH

@@ -11,13 +11,13 @@ class WelcomeScreen extends Component {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'space-evenly',
+          justifyContent: 'center',
           backgroundColor: '#FFFFFF'
         }}
       >
-        <View style={{ padding: 25 }}>
+        <View style={{ padding: 15 }}>
           <Text
-            style={{ textAlign: 'center', fontWeight: '500', fontSize: 48 }}
+            style={{ textAlign: 'center', fontWeight: '200', fontSize: 48 }}
           >
             Mappuccino
           </Text>
@@ -31,9 +31,9 @@ class WelcomeScreen extends Component {
             marginBottom: 10
           }}
         />
-        <View style={{ padding: 25 }}>
+        <View style={{ padding: 15 }}>
           <Text
-            style={{ textAlign: 'center', fontWeight: '500', fontSize: 25 }}
+            style={{ textAlign: 'center', fontWeight: '300', fontSize: 25 }}
           >
             Find coffee shops near you with a single button!
           </Text>
