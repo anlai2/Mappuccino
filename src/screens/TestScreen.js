@@ -49,7 +49,8 @@ export default class TestScreen extends React.Component {
           : [],
         openNow: true
       },
-      loading: false
+      loading: false,
+      searched: false
     };
   }
 
@@ -136,7 +137,7 @@ export default class TestScreen extends React.Component {
         this.setState({ coffeeShops: data.businesses });
       })
       .then(() => this.renderCards())
-      .then(() => this.setState({ loading: false }))
+      .then(() => this.setState({ loading: false, searched: true }))
       .catch(err => console.log(err));
   };
 
@@ -204,7 +205,7 @@ export default class TestScreen extends React.Component {
   };
 
   renderButton = () => {
-    if (!this.state.loading) {
+    if (!this.state.loading && !this.state.searched) {
       return (
         <TouchableOpacity
           style={{ alignItems: 'center', justifyContent: 'center' }}
@@ -214,8 +215,35 @@ export default class TestScreen extends React.Component {
             style={styles.searchGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
-            <Icon type="font-awesome" name="search" color="white" size={16} />
+            <Icon
+              containerStyle={{ paddingRight: 5 }}
+              type="font-awesome"
+              name="search"
+              color="white"
+              size={16}
+            />
             <Text style={styles.searchButtonStyle}>Search Coffee in Area</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      );
+    } else if (!this.state.loading && this.state.searched) {
+      return (
+        <TouchableOpacity
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+          onPress={this.onButtonPress}
+        >
+          <LinearGradient
+            style={styles.searchGradientStyle}
+            colors={['#86592d', '#ac7339', '#c68c53']}
+          >
+            <Icon
+              containerStyle={{ paddingRight: 5 }}
+              type="font-awesome"
+              name="search"
+              color="white"
+              size={16}
+            />
+            <Text style={styles.searchButtonStyle}>Redo Search in Area</Text>
           </LinearGradient>
         </TouchableOpacity>
       );
