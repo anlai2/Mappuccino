@@ -42,6 +42,7 @@ export default class TestScreen extends React.Component {
         latitudeDelta: 0.0015
       },
       currentRegion: {},
+      currentAddress: '',
       coffeeShops: {},
       filter: {
         price: !_.isNull(this.props.filterData.filter.price)
@@ -109,7 +110,22 @@ export default class TestScreen extends React.Component {
           latitudeDelta: 0.015
         }
       });
+
+      fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+          position.coords.latitude
+        },${
+          position.coords.longitude
+        }&key=AIzaSyAv3zg5iVWUsWLoAcsDO1-DqyWlcPsAHow`
+      )
+        .then(res => res.json())
+        .then(data => {
+          this.setState({ currentAddress: data.results[0].formatted_address });
+        })
+        .catch(err => console.log(err));
     });
+
+    console.log(this.state.currentRegion);
   }
 
   // ES6 function that is ran when we call it on a UI
@@ -400,7 +416,9 @@ export default class TestScreen extends React.Component {
                         onPress={() => {
                           Platform.OS === 'ios'
                             ? Linking.openURL(
-                                `http://maps.apple.com/?address=${shop.location.display_address.join(
+                                `http://maps.apple.com/?saddr=${
+                                  this.state.currentAddress
+                                }&daddr=${shop.location.display_address.join(
                                   ' '
                                 )}`
                               )
