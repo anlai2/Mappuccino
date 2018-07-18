@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Linking, Platform } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Linking,
+  Platform,
+  ScrollView
+} from 'react-native';
 import { MapView, Marker } from 'expo';
 import { Icon, Button, Card, Image } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
@@ -25,7 +32,7 @@ class InfoModal extends Component {
     } = this.props.shop;
 
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.onBackContainer}>
             <TouchableOpacity onPress={() => Actions.pop()}>
@@ -130,7 +137,7 @@ class InfoModal extends Component {
             </View>
           </View>
         </Card>
-      </View>
+      </ScrollView>
     );
   }
 }
