@@ -28,7 +28,7 @@ const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 3.5;
+const CARD_HEIGHT = height / 3.9;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
@@ -46,7 +46,8 @@ export default class TestScreen extends React.Component {
       filter: {
         price: !_.isNull(this.props.filterData.filter.price)
           ? this.props.filterData.filter.price
-          : []
+          : [],
+        openNow: true
       },
       loading: false
     };
@@ -59,6 +60,7 @@ export default class TestScreen extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ filter: nextProps.filterData.filter });
+    console.log(nextProps);
   }
 
   componentDidMount() {
@@ -118,7 +120,7 @@ export default class TestScreen extends React.Component {
         this.state.region.latitude
       }&longitude=${
         this.state.region.longitude
-      }&open_now=true&term=coffee&radius=2500&offset=25&sort_by=distance&price=${this.state.filter.price.join(
+      }&term=coffee&radius=2500&offset=25&sort_by=distance&price=${this.state.filter.price.join(
         ','
       )}`,
       {
@@ -131,7 +133,6 @@ export default class TestScreen extends React.Component {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ coffeeShops: data.businesses });
       })
       .then(() => this.renderCards())
@@ -308,7 +309,7 @@ export default class TestScreen extends React.Component {
                           alignContent: 'flex-end'
                         }}
                       >
-                        <Text>{shop.price + '    '}</Text>
+                        <Text>{shop.price + '  '}</Text>
                         <StarRating
                           maxStars={5}
                           disabled
@@ -320,18 +321,32 @@ export default class TestScreen extends React.Component {
                       </View>
                       <View
                         style={{
-                          paddingTop: 10,
-                          paddingBottom: 10
+                          paddingTop: 10
                         }}
                       >
                         <Image
                           resizeMode={'cover'}
                           style={{
-                            width: CARD_WIDTH - 175,
-                            height: CARD_HEIGHT - 75
+                            width: 100,
+                            height: 100
                           }}
                           source={{ uri: shop.image_url }}
                         />
+                      </View>
+                      <View
+                        style={{
+                          marginTop: 4,
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start'
+                        }}
+                      >
+                        <Icon
+                          type="font-awesome"
+                          name="coffee"
+                          color="black"
+                          size={16}
+                        />
+                        <Text> ~75 mg</Text>
                       </View>
                     </View>
                     <View

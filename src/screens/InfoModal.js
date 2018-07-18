@@ -68,6 +68,7 @@ class InfoModal extends Component {
               </TouchableOpacity>
               <Text>{categories[0].title}</Text>
             </View>
+            {/* is_closed actually indicates if business has been permanently closed */}
             {is_closed ? (
               <Text style={{ color: 'red' }}>Closed</Text>
             ) : (
