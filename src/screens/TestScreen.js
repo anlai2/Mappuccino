@@ -343,7 +343,7 @@ export default class TestScreen extends React.Component {
                     >
                       <Text
                         style={{
-                          fontWeight: 'bold'
+                          fontWeight: '500'
                         }}
                       >
                         {shop.name}
