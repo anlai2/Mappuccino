@@ -372,8 +372,8 @@ export default class TestScreen extends React.Component {
                         <Image
                           resizeMode={'cover'}
                           style={{
-                            width: 100,
-                            height: 100
+                            width: CARD_WIDTH / 3,
+                            height: CARD_HEIGHT / 2
                           }}
                           source={{ uri: shop.image_url }}
                         />
