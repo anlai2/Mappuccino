@@ -345,6 +345,7 @@ export default class TestScreen extends React.Component {
                         style={{
                           fontWeight: '500'
                         }}
+                        numberOfLines={1}
                       >
                         {shop.name}
                       </Text>
@@ -391,7 +392,8 @@ export default class TestScreen extends React.Component {
                       </View>
                       <View>
                         <Text style={{ fontWeight: '300' }}>
-                          {shop.distance.toFixed(1) + ' Meters'}
+                          {(shop.distance * 0.00062137).toFixed(1) +
+                            ' Miles Away'}
                         </Text>
                       </View>
                     </View>
