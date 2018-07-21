@@ -376,7 +376,12 @@ export default class TestScreen extends React.Component {
                             width: CARD_WIDTH / 3,
                             height: CARD_HEIGHT / 2
                           }}
-                          source={{ uri: shop.image_url }}
+                          source={{
+                            uri:
+                              shop.image_url !== ''
+                                ? shop.image_url
+                                : 'https://images.pexels.com/photos/434213/pexels-photo-434213.jpeg?auto=compress&cs=tinysrgb&h=350'
+                          }}
                         />
                       </View>
                       <View
