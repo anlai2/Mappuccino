@@ -62,7 +62,7 @@ export default class TestScreen extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ filter: nextProps.filterData.filter });
-    console.log(nextProps);
+    this.onButtonPress();
   }
 
   componentDidMount() {
