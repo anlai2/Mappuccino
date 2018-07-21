@@ -25,7 +25,8 @@ class FilterModal extends Component {
       },
       priceOne: _.isNull(priceOne) ? false : priceOne,
       priceTwo: _.isNull(priceTwo) ? false : priceTwo,
-      openNow: true
+      openNow: true,
+      topRated: false
     };
   }
 
@@ -60,6 +61,12 @@ class FilterModal extends Component {
   handleOpenNow = () => {
     this.setState({
       openNow: !this.state.openNow
+    });
+  };
+
+  handleTopRated = () => {
+    this.setState({
+      topRated: !this.state.topRated
     });
   };
 
@@ -133,9 +140,9 @@ class FilterModal extends Component {
             >
               <Text style={styles.filterTextStyle}>Top Rated</Text>
               <Switch
-                onValueChange={this.handleOpenNow}
+                onValueChange={this.handleTopRated}
                 onTintColor={'#86592d'}
-                value={this.state.openNow}
+                value={this.state.topRated}
               />
             </View>
           </Card>
