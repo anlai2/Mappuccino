@@ -83,7 +83,10 @@ class FilterModal extends Component {
           </View>
         </View>
         <View>
-          <Card title="Filter Search">
+          <Card
+            titleStyle={{ fontWeight: '400', fontSize: 24 }}
+            title="Filter Search"
+          >
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
