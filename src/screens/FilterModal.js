@@ -132,6 +132,11 @@ class FilterModal extends Component {
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <Text style={styles.filterTextStyle}>Top Rated</Text>
+              <Switch
+                onValueChange={this.handleOpenNow}
+                onTintColor={'#86592d'}
+                value={this.state.openNow}
+              />
             </View>
           </Card>
         </View>
