@@ -387,7 +387,9 @@ export default class TestScreen extends React.Component {
                         }}
                       >
                         <Text style={{ fontWeight: '300' }}>
-                          Avg. Caffeine: ~75mg
+                          {'Avg. Caffeine: ~' +
+                            (Math.random() * (150 - 75) + 75).toFixed(1) +
+                            'mg'}
                         </Text>
                       </View>
                       <View>
