@@ -87,7 +87,7 @@ class FilterModal extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={{ fontSize: 24 }}>Price</Text>
+              <Text style={styles.filterTextStyle}>Price</Text>
               <View
                 style={{ flexDirection: 'row', justifyContent: 'space-around' }}
               >
@@ -117,12 +117,18 @@ class FilterModal extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={{ fontSize: 24 }}>Open Now</Text>
+              <Text style={styles.filterTextStyle}>Open Now</Text>
               <Switch
                 onValueChange={this.handleOpenNow}
                 onTintColor={'#86592d'}
                 value={this.state.openNow}
               />
+            </View>
+            <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <Text style={styles.filterTextStyle}>Top Rated</Text>
             </View>
           </Card>
         </View>
@@ -175,6 +181,10 @@ const styles = {
   },
   onPriceButtonStyle: {
     backgroundColor: '#86592d'
+  },
+  filterTextStyle: {
+    fontSize: 20,
+    fontWeight: '300'
   }
 };
 
