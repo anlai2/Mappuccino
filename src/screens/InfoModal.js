@@ -130,6 +130,7 @@ class InfoModal extends Component {
                 showsPointsOfInterest={false}
                 loadingIndicatorColor="brown"
                 cacheEnable={Platform.OS === 'android'}
+                scrollEnabled={false}
               >
                 <MapView.Marker coordinate={coordinates} />
               </MapView>
