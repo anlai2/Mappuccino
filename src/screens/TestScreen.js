@@ -249,7 +249,7 @@ export default class TestScreen extends React.Component {
           onPress={this.onButtonPress}
         >
           <LinearGradient
-            style={styles.searchGradientStyle}
+            style={styles.redoGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
             <Icon
@@ -267,7 +267,7 @@ export default class TestScreen extends React.Component {
       return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <LinearGradient
-            style={styles.loadingGradientStyle}
+            style={styles.redoGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
             <ActivityIndicator color="#FFFFFF" />
@@ -655,11 +655,13 @@ const styles = StyleSheet.create({
     height: 45,
     padding: 15,
     borderRadius: 20,
-    shadowOffset: { width: 3, height: 3 },
-    shadowColor: 'black',
-    shadowOpacity: 0.2
+    shadowColor: '#000',
+    shadowRadius: 5,
+    shadowOpacity: 0.6,
+    shadowOffset: { x: 2, y: -2 },
   },
-  loadingGradientStyle: {
+  redoGradientStyle: {
+    flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: 'transparent',
     alignItems: 'center',
