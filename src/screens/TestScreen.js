@@ -28,7 +28,7 @@ const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 3.9;
+const CARD_HEIGHT = height / 3.5;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
@@ -62,7 +62,7 @@ export default class TestScreen extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ filter: nextProps.filterData.filter });
-    console.log(nextProps);
+    this.onButtonPress();
   }
 
   componentDidMount() {
@@ -249,7 +249,7 @@ export default class TestScreen extends React.Component {
           onPress={this.onButtonPress}
         >
           <LinearGradient
-            style={styles.searchGradientStyle}
+            style={styles.redoGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
             <Icon
@@ -267,7 +267,7 @@ export default class TestScreen extends React.Component {
       return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <LinearGradient
-            style={styles.loadingGradientStyle}
+            style={styles.redoGradientStyle}
             colors={['#86592d', '#ac7339', '#c68c53']}
           >
             <ActivityIndicator color="#FFFFFF" />
@@ -345,6 +345,7 @@ export default class TestScreen extends React.Component {
                         style={{
                           fontWeight: '500'
                         }}
+                        numberOfLines={1}
                       >
                         {shop.name}
                       </Text>
@@ -354,7 +355,7 @@ export default class TestScreen extends React.Component {
                           alignContent: 'flex-end'
                         }}
                       >
-                        <Text>{shop.price + '  '}</Text>
+                        <Text>{shop.price !== undefined ? shop.price + '  ' : '  '}</Text>
                         <StarRating
                           maxStars={5}
                           disabled
@@ -372,10 +373,15 @@ export default class TestScreen extends React.Component {
                         <Image
                           resizeMode={'cover'}
                           style={{
-                            width: CARD_WIDTH / 3,
+                            width: CARD_WIDTH / 1.5,
                             height: CARD_HEIGHT / 2
                           }}
-                          source={{ uri: shop.image_url }}
+                          source={{
+                            uri:
+                              shop.image_url !== ''
+                                ? shop.image_url
+                                : 'https://images.pexels.com/photos/434213/pexels-photo-434213.jpeg?auto=compress&cs=tinysrgb&h=350'
+                          }}
                         />
                       </View>
                       <View
@@ -385,71 +391,88 @@ export default class TestScreen extends React.Component {
                           justifyContent: 'flex-start'
                         }}
                       >
-                        <Icon
-                          type="font-awesome"
-                          name="coffee"
-                          color="black"
-                          size={16}
-                        />
-                        <Text> ~75 mg</Text>
+                        <Text style={{ fontWeight: '300' }}>
+                          {'Avg. Caffeine: ~' +
+                            (Math.random() * (150 - 75) + 75).toFixed(1) +
+                            'mg'}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={{ fontWeight: '300' }}>
+                          {(shop.distance * 0.00062137).toFixed(1) +
+                            ' Miles Away'}
+                        </Text>
                       </View>
                     </View>
-                    <View
-                      style={{
-                        flexDirection: 'column',
-                        justifyContent: 'space-around',
-                        alignItems: 'center',
-                        paddingBottom: 10
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => Linking.openURL(`tel:${shop.phone}`)}
+                    <View style={{ flexDirection: 'row' }}>
+                      <View
+                        style={{
+                          flexDirection: 'column',
+                          justifyContent: 'space-around',
+                          alignItems: 'center',
+                          paddingBottom: 10
+                        }}
                       >
-                        <Icon
-                          raised
-                          reverse
-                          name="phone"
-                          type="font-awesome"
-                          color="rgb(76, 217, 100)"
-                          size={20}
-                        />
-                      </TouchableOpacity>
-                      {/* <Button
+                        <Text />
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'column',
+                          justifyContent: 'space-around',
+                          alignItems: 'center',
+                          paddingBottom: 10
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => Linking.openURL(`tel:${shop.phone}`)}
+                        >
+                          <Icon
+                            raised
+                            reverse
+                            name="phone"
+                            type="font-awesome"
+                            color="rgb(76, 217, 100)"
+                            size={20}
+                          />
+                        </TouchableOpacity>
+                        {/* <Button
                         backgroundColor="rgb(76, 217, 100)"
                         title="Call"
                         icon={{ name: 'phone' }}
                         buttonStyle={{ borderRadius: 10, height: 42 }}
                         onPress={() => Linking.openURL(`tel:${shop.phone}`)}
                       /> */}
-                      <TouchableOpacity
-                        onPress={() => {
-                          Platform.OS === 'ios'
-                            ? Linking.openURL(
-                                `http://maps.apple.com/?saddr=${
-                                  this.state.currentAddress
-                                }&daddr=${shop.location.display_address.join(
-                                  ' '
-                                )}`
-                              )
-                            : Linking.openURL(
-                                `comgooglemaps://?saddr=${
-                                  this.state.currentRegion.latitude
-                                },${this.state.currentRegion.longitude}&daddr=${
-                                  shop.coordinates.latitude
-                                },${shop.coordinates.longitude}`
-                              );
-                        }}
-                      >
-                        <Icon
-                          raised
-                          reverse
-                          name="directions"
-                          type="material-icons"
-                          color="rgb(0, 122, 255)"
-                          size={20}
-                        />
-                      </TouchableOpacity>
-                      {/* <Button
+                        <TouchableOpacity
+                          onPress={() => {
+                            Platform.OS === 'ios'
+                              ? Linking.openURL(
+                                  `http://maps.apple.com/?saddr=${
+                                    this.state.currentAddress
+                                  }&daddr=${shop.location.display_address.join(
+                                    ' '
+                                  )}`
+                                )
+                              : Linking.openURL(
+                                  `comgooglemaps://?saddr=${
+                                    this.state.currentRegion.latitude
+                                  },${
+                                    this.state.currentRegion.longitude
+                                  }&daddr=${shop.coordinates.latitude},${
+                                    shop.coordinates.longitude
+                                  }`
+                                );
+                          }}
+                        >
+                          <Icon
+                            raised
+                            reverse
+                            name="directions"
+                            type="material-icons"
+                            color="rgb(0, 122, 255)"
+                            size={20}
+                          />
+                        </TouchableOpacity>
+                        {/* <Button
                         backgroundColor="rgb(0, 122, 255)"
                         title="Directions"
                         icon={{ name: 'directions' }}
@@ -472,23 +495,26 @@ export default class TestScreen extends React.Component {
                               );
                         }}
                       /> */}
-                      <TouchableOpacity onPress={() => Actions.info({ shop })}>
-                        <Icon
-                          raised
-                          reverse
-                          name="info"
-                          type="foundation"
-                          color="#3b5998"
-                          size={20}
-                        />
-                      </TouchableOpacity>
-                      {/* <Button
+                        <TouchableOpacity
+                          onPress={() => Actions.info({ shop })}
+                        >
+                          <Icon
+                            raised
+                            reverse
+                            name="info"
+                            type="foundation"
+                            color="#3b5998"
+                            size={20}
+                          />
+                        </TouchableOpacity>
+                        {/* <Button
                         backgroundColor="#3b5998"
                         title="More Info"
                         icon={{ name: 'info' }}
                         buttonStyle={{ borderRadius: 10, height: 42 }}
                         onPress={() => Actions.info({ shop })}
                       /> */}
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -629,11 +655,13 @@ const styles = StyleSheet.create({
     height: 45,
     padding: 15,
     borderRadius: 20,
-    shadowOffset: { width: 3, height: 3 },
-    shadowColor: 'black',
-    shadowOpacity: 0.2
+    shadowColor: '#000',
+    shadowRadius: 5,
+    shadowOpacity: 0.6,
+    shadowOffset: { x: 2, y: -2 },
   },
-  loadingGradientStyle: {
+  redoGradientStyle: {
+    flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: 'transparent',
     alignItems: 'center',

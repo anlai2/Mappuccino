@@ -75,7 +75,7 @@ class InfoModal extends Component {
               </TouchableOpacity>
               <Text>{categories[0].title}</Text>
             </View>
-            {/* is_closed actually indicates if business has been permanently closed */}
+            {/* TODO: is_closed actually indicates if business has been permanently closed */}
             {is_closed ? (
               <Text style={{ color: 'red' }}>Closed</Text>
             ) : (
@@ -83,7 +83,36 @@ class InfoModal extends Component {
             )}
             <View
               style={{
-                height: 300,
+                padding: 15,
+                marginTop: 10,
+                backgroundColor: '#F5F5F5',
+                borderRadius: 25,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}
+            >
+              <View>
+                <Text>Monday</Text>
+                <Text>Tuesday</Text>
+                <Text>Wednesday</Text>
+                <Text>Thursday</Text>
+                <Text>Friday</Text>
+                <Text>Saturday</Text>
+                <Text>Sunday</Text>
+              </View>
+              <View>
+                <Text>6:00 AM - 6:00 PM</Text>
+                <Text>6:00 AM - 6:00 PM</Text>
+                <Text>6:00 AM - 6:00 PM</Text>
+                <Text>6:00 AM - 6:00 PM</Text>
+                <Text>6:00 AM - 6:00 PM</Text>
+                <Text>6:00 AM - 6:00 PM</Text>
+                <Text>6:00 AM - 6:00 PM</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                height: 200,
                 paddingTop: 20
               }}
             >
@@ -92,8 +121,8 @@ class InfoModal extends Component {
                 initialRegion={{
                   latitude: coordinates.latitude,
                   longitude: coordinates.longitude,
-                  latitudeDelta: 0.015,
-                  longitudeDelta: 0.015
+                  latitudeDelta: 0.0055,
+                  longitudeDelta: 0.0055
                 }}
                 showsUserLocation={true}
                 loadingEnabled={true}

@@ -25,7 +25,8 @@ class FilterModal extends Component {
       },
       priceOne: _.isNull(priceOne) ? false : priceOne,
       priceTwo: _.isNull(priceTwo) ? false : priceTwo,
-      openNow: true
+      openNow: true,
+      topRated: false
     };
   }
 
@@ -63,6 +64,12 @@ class FilterModal extends Component {
     });
   };
 
+  handleTopRated = () => {
+    this.setState({
+      topRated: !this.state.topRated
+    });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -83,11 +90,14 @@ class FilterModal extends Component {
           </View>
         </View>
         <View>
-          <Card title="Filter Search">
+          <Card
+            titleStyle={{ fontWeight: '400', fontSize: 24 }}
+            title="Filter Search"
+          >
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={{ fontSize: 24 }}>Price</Text>
+              <Text style={styles.filterTextStyle}>Price</Text>
               <View
                 style={{ flexDirection: 'row', justifyContent: 'space-around' }}
               >
@@ -117,11 +127,22 @@ class FilterModal extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={{ fontSize: 24 }}>Open Now</Text>
+              <Text style={styles.filterTextStyle}>Open Now</Text>
               <Switch
                 onValueChange={this.handleOpenNow}
                 onTintColor={'#86592d'}
                 value={this.state.openNow}
+              />
+            </View>
+            <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <Text style={styles.filterTextStyle}>Top Rated</Text>
+              <Switch
+                onValueChange={this.handleTopRated}
+                onTintColor={'#86592d'}
+                value={this.state.topRated}
               />
             </View>
           </Card>
@@ -175,6 +196,10 @@ const styles = {
   },
   onPriceButtonStyle: {
     backgroundColor: '#86592d'
+  },
+  filterTextStyle: {
+    fontSize: 20,
+    fontWeight: '300'
   }
 };
 
