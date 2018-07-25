@@ -150,14 +150,12 @@ class InfoModal extends Component {
                 onPress={() => {
                   Platform.OS === 'ios'
                     ? Linking.openURL(
-                        `http://maps.apple.com/?address=${shop.location.display_address.join(
+                        `http://maps.apple.com/?address=${location.display_address.join(
                           ' '
                         )}`
                       )
                     : Linking.openURL(
-                        `comgooglemaps://?saddr=${
-                          this.state.currentRegion.latitude
-                        },${this.state.currentRegion.longitude}&daddr=${
+                        `comgooglemaps://?addr=${
                           shop.coordinates.latitude
                         },${shop.coordinates.longitude}`
                       );
