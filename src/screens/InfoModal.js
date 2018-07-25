@@ -156,8 +156,8 @@ class InfoModal extends Component {
                       )
                     : Linking.openURL(
                         `comgooglemaps://?addr=${
-                          shop.coordinates.latitude
-                        },${shop.coordinates.longitude}`
+                          coordinates.latitude
+                        },${coordinates.longitude}`
                       );
                 }}
               />
