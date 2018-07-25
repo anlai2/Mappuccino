@@ -355,7 +355,7 @@ export default class TestScreen extends React.Component {
                           alignContent: 'flex-end'
                         }}
                       >
-                        <Text>{shop.price + '  '}</Text>
+                        <Text>{shop.price !== undefined ? shop.price + '  ' : '  '}</Text>
                         <StarRating
                           maxStars={5}
                           disabled
