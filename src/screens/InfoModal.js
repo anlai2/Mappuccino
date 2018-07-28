@@ -37,7 +37,7 @@ class InfoModal extends Component {
           <View style={styles.onBackContainer}>
           <TouchableOpacity
               onPress={() =>
-                Actions.pop({ refresh: { filterData: this.state } })
+                Actions.pop()
               }
             >
             <Text style={{paddingTop: 15}}>Back to Map</Text>

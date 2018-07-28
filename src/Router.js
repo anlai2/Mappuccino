@@ -11,12 +11,12 @@ import InfoModal from './screens/InfoModal';
 const RouterComponent = () => (
   <Router>
     <Modal>
-      <Scene key="welcome" hideNavBar component={WelcomeScreen} initial />
-      <Scene key="root" hideNavbar>
-        <Scene key="map" hideNavBar component={TestScreen} />
+      <Scene key="welcome" hideNavBar component={WelcomeScreen} initial panHandlers={null}/>
+      <Scene key="root" hideNavbar panHandlers={null}>
+        <Scene key="map" hideNavBar component={TestScreen} panHandlers={null}/>
       </Scene>
-      <Scene key="filter" hideNavBar component={FilterModal} />
-      <Scene key="info" hideNavBar component={InfoModal} />
+      <Scene key="filter" hideNavBar component={FilterModal} panHandlers={null}/>
+      <Scene key="info" hideNavBar component={InfoModal} panHandlers={null}/>
     </Modal>
   </Router>
 );
