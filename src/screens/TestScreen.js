@@ -79,12 +79,13 @@ export default class TestScreen extends React.Component {
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          const { coordinates } = this.state.coffeeShops[index];
+          this.setState({ index: this.index})
+          const { coordinates } = this.state.coffeeShops[this.index];
           this.map.animateToRegion(
             {
               ...coordinates,
-              latitudeDelta: 0.0015,
-              longitudeDelta: 0.015
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01
             },
             350
           );
@@ -127,6 +128,25 @@ export default class TestScreen extends React.Component {
 
     console.log(this.state.currentRegion);
   }
+
+  onLocationButtonPress = () => {
+    const { coordinates } = this.state.coffeeShops[this.state.index];
+
+    navigator.geolocation.getCurrentPosition(position => {
+      this.setState({
+        region: {
+          ...position.coords,
+          longitudeDelta: Math.abs(position.coords.longitude - coordinates.longitude + 0.085),
+          latitudeDelta: Math.abs(position.coords.latitude - coordinates.latitude + 0.055)
+        },
+        currentRegion: {
+          ...position.coords,
+          longitudeDelta: Math.abs(position.coords.longitude - coordinates.longitude + 0.085),
+          latitudeDelta: Math.abs(position.coords.latitude - coordinates.latitude + 0.055)
+        }
+      });
+    });
+  };
 
   // ES6 function that is ran when we call it on a UI
   // We are calling it on the onPress property of Button in the render method
@@ -294,6 +314,27 @@ export default class TestScreen extends React.Component {
           loadingIndicatorColor="brown"
           cacheEnable={Platform.OS === 'android'}
         >
+          <TouchableOpacity
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingTop: 50
+            }}
+            onPress={this.onLocationButtonPress}
+          >
+            <LinearGradient colors={['#86592d', '#ac7339', '#c68c53']}>
+              <Icon
+                containerStyle={{ paddingRight: 5 }}
+                type="font-awesome"
+                name="search"
+                color="white"
+                size={16}
+              />
+              <Text style={styles.searchButtonStyle}>
+                Search Coffee in Area
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
           {!_.isEmpty(this.state.coffeeShops) ? this.renderShops() : null}
         </MapView>
         <Animated.ScrollView
@@ -355,7 +396,9 @@ export default class TestScreen extends React.Component {
                           alignContent: 'flex-end'
                         }}
                       >
-                        <Text>{shop.price !== undefined ? shop.price + '  ' : '  '}</Text>
+                        <Text>
+                          {shop.price !== undefined ? shop.price + '  ' : '  '}
+                        </Text>
                         <StarRating
                           maxStars={5}
                           disabled
@@ -384,20 +427,7 @@ export default class TestScreen extends React.Component {
                           }}
                         />
                       </View>
-                      <View
-                        style={{
-                          marginTop: 4,
-                          flexDirection: 'row',
-                          justifyContent: 'flex-start'
-                        }}
-                      >
-                        <Text style={{ fontWeight: '300' }}>
-                          {'Avg. Caffeine: ~' +
-                            (Math.random() * (150 - 75) + 75).toFixed(1) +
-                            'mg'}
-                        </Text>
-                      </View>
-                      <View>
+                      <View style={{ paddingTop: 5 }}>
                         <Text style={{ fontWeight: '300' }}>
                           {(shop.distance * 0.00062137).toFixed(1) +
                             ' Miles Away'}
@@ -658,7 +688,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowRadius: 5,
     shadowOpacity: 0.6,
-    shadowOffset: { x: 2, y: -2 },
+    shadowOffset: { x: 2, y: -2 }
   },
   redoGradientStyle: {
     flexDirection: 'row',
