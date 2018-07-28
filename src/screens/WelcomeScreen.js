@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Actions } from 'react-native-router-flux';
 
-import WelcomeImage from '../../assets/coffeeImage.jpg';
+import WelcomeImage from '../../assets/mappuccinoIcon.png';
 import MappuccinoName from '../../assets/mappuccinoName.png';
 class WelcomeScreen extends Component {
   render() {
@@ -12,7 +12,7 @@ class WelcomeScreen extends Component {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-around',
           backgroundColor: '#FFFFFF'
         }}
       >
@@ -22,9 +22,9 @@ class WelcomeScreen extends Component {
         <Image
           source={WelcomeImage}
           style={{
-            resizeMode: 'cover',
-            width: 400,
-            height: 400,
+            resizeMode: 'contain',
+            width: 200,
+            height: 200,
             marginBottom: 10
           }}
         />
