@@ -322,14 +322,6 @@ export default class TestScreen extends React.Component {
         >
           {!_.isEmpty(this.state.coffeeShops) ? this.renderShops() : null}
         </MapView>
-        <View>
-        {!_.isEmpty(this.state.coffeeShops) ?
-        <TouchableOpacity onPress={this.onLocationButtonPress}>
-            <Text
-              style={{ color: "rgb(0, 122, 255)" }}
-            ></Text>
-          </TouchableOpacity> : null}
-        </View>git re
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
