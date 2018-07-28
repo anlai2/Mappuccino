@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo';
 import { Actions } from 'react-native-router-flux';
 
 import WelcomeImage from '../../assets/coffeeImage.jpg';
+import MappuccinoName from '../../assets/mappuccinoName.png';
 class WelcomeScreen extends Component {
   render() {
     return (
@@ -16,11 +17,7 @@ class WelcomeScreen extends Component {
         }}
       >
         <View style={{ padding: 15 }}>
-          <Text
-            style={{ textAlign: 'center', fontWeight: '200', fontSize: 48 }}
-          >
-            Mappuccino
-          </Text>
+          <Image source={MappuccinoName} style={{ width: 400, height: 100, resizeMode: 'contain' }}/>
         </View>
         <Image
           source={WelcomeImage}

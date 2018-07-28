@@ -18,7 +18,6 @@ import {
   Dimensions
 } from 'react-native';
 
-const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
 
 const { width, height } = Dimensions.get('window');
 

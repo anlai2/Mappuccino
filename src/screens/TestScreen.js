@@ -24,11 +24,9 @@ import {
 import { Actions } from 'react-native-router-flux';
 import StarRating from 'react-native-star-rating';
 
-const COFFEE_MARKER = require('../../assets/coffeeIcon.png');
-
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 3.5;
+const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
