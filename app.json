@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "mappuccino",
-    "description": "This project is really great.",
+    "description": "Find coffee shops near you with a single button.",
     "slug": "mappuccino",
     "privacy": "public",
     "sdkVersion": "28.0.0",
@@ -21,7 +21,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.andy-lai.mappuccino"
+    },
+    "android": {
+      "package": "com.andylai.mappuccino",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBTx9JiRSCODm2i65IPuWi_uiZYVhZghcM"
+        }
+      }
     }
   }
 }
