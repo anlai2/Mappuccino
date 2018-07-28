@@ -73,13 +73,14 @@ class FilterModal extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.container}>
+        <View style={styles.headerContainer}>
           <View style={styles.onBackContainer}>
             <TouchableOpacity
               onPress={() =>
                 Actions.pop({ refresh: { filterData: this.state } })
               }
             >
+            <Text style={{paddingTop: 15}}>Back to Map</Text>
               <Icon
                 type="entypo"
                 name="chevron-thin-down"
@@ -138,12 +139,7 @@ class FilterModal extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={styles.filterTextStyle}>Top Rated</Text>
-              <Switch
-                onValueChange={this.handleTopRated}
-                onTintColor={'#86592d'}
-                value={this.state.topRated}
-              />
+              <Text style={styles.filterTextStyle}>More coming soon...</Text>
             </View>
           </Card>
         </View>
@@ -163,11 +159,11 @@ FilterModal.defaultProps = {
 };
 
 const styles = {
-  container: {
+  headerContainer: {
     backgroundColor: '#ac7339',
     justifyContent: 'center', // Vertical
     alignItems: 'center', // Horizontal
-    height: 80,
+    height: 100,
     paddingTop: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
