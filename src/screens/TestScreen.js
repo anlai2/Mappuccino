@@ -77,7 +77,7 @@ export default class TestScreen extends React.Component {
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          this.setState({ index: this.index})
+          this.setState({ index: this.index });
           const { coordinates } = this.state.coffeeShops[this.index];
           this.map.animateToRegion(
             {
@@ -128,19 +128,27 @@ export default class TestScreen extends React.Component {
   }
 
   onLocationButtonPress = () => {
-    const { coordinates } = this.state.coffeeShops[this.state.index];
+    const { coordinates } = this.state.coffeeShops[Math.floor(this.state.index)];
 
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         region: {
           ...position.coords,
-          longitudeDelta: Math.abs(position.coords.longitude - coordinates.longitude + 0.085),
-          latitudeDelta: Math.abs(position.coords.latitude - coordinates.latitude + 0.055)
+          longitudeDelta: Math.abs(
+            position.coords.longitude - coordinates.longitude + 0.085
+          ),
+          latitudeDelta: Math.abs(
+            position.coords.latitude - coordinates.latitude + 0.055
+          )
         },
         currentRegion: {
           ...position.coords,
-          longitudeDelta: Math.abs(position.coords.longitude - coordinates.longitude + 0.085),
-          latitudeDelta: Math.abs(position.coords.latitude - coordinates.latitude + 0.055)
+          longitudeDelta: Math.abs(
+            position.coords.longitude - coordinates.longitude + 0.085
+          ),
+          latitudeDelta: Math.abs(
+            position.coords.latitude - coordinates.latitude + 0.055
+          )
         }
       });
     });
@@ -312,29 +320,16 @@ export default class TestScreen extends React.Component {
           loadingIndicatorColor="brown"
           cacheEnable={Platform.OS === 'android'}
         >
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingTop: 50
-            }}
-            onPress={this.onLocationButtonPress}
-          >
-            <LinearGradient colors={['#86592d', '#ac7339', '#c68c53']}>
-              <Icon
-                containerStyle={{ paddingRight: 5 }}
-                type="font-awesome"
-                name="search"
-                color="white"
-                size={16}
-              />
-              <Text style={styles.searchButtonStyle}>
-                Search Coffee in Area
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
           {!_.isEmpty(this.state.coffeeShops) ? this.renderShops() : null}
         </MapView>
+        <View>
+        {!_.isEmpty(this.state.coffeeShops) ?
+        <TouchableOpacity onPress={this.onLocationButtonPress}>
+            <Text
+              style={{ color: "rgb(0, 122, 255)" }}
+            ></Text>
+          </TouchableOpacity> : null}
+        </View>git re
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
@@ -463,13 +458,6 @@ export default class TestScreen extends React.Component {
                             size={20}
                           />
                         </TouchableOpacity>
-                        {/* <Button
-                        backgroundColor="rgb(76, 217, 100)"
-                        title="Call"
-                        icon={{ name: 'phone' }}
-                        buttonStyle={{ borderRadius: 10, height: 42 }}
-                        onPress={() => Linking.openURL(`tel:${shop.phone}`)}
-                      /> */}
                         <TouchableOpacity
                           onPress={() => {
                             Platform.OS === 'ios'
@@ -500,29 +488,6 @@ export default class TestScreen extends React.Component {
                             size={20}
                           />
                         </TouchableOpacity>
-                        {/* <Button
-                        backgroundColor="rgb(0, 122, 255)"
-                        title="Directions"
-                        icon={{ name: 'directions' }}
-                        buttonStyle={{ borderRadius: 10, height: 42 }}
-                        onPress={() => {
-                          Platform.OS === 'ios'
-                            ? Linking.openURL(
-                                `http://maps.apple.com/?saddr=${
-                                  this.state.currentAddress
-                                }&daddr=${shop.location.display_address.join(
-                                  ' '
-                                )}`
-                              )
-                            : Linking.openURL(
-                                `comgooglemaps://?saddr=${
-                                  this.state.currentRegion.latitude
-                                },${this.state.currentRegion.longitude}&daddr=${
-                                  shop.coordinates.latitude
-                                },${shop.coordinates.longitude}`
-                              );
-                        }}
-                      /> */}
                         <TouchableOpacity
                           onPress={() => Actions.info({ shop })}
                         >
@@ -535,13 +500,6 @@ export default class TestScreen extends React.Component {
                             size={20}
                           />
                         </TouchableOpacity>
-                        {/* <Button
-                        backgroundColor="#3b5998"
-                        title="More Info"
-                        icon={{ name: 'info' }}
-                        buttonStyle={{ borderRadius: 10, height: 42 }}
-                        onPress={() => Actions.info({ shop })}
-                      /> */}
                       </View>
                     </View>
                   </View>

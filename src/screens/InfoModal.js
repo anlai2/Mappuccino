@@ -35,7 +35,12 @@ class InfoModal extends Component {
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.onBackContainer}>
-            <TouchableOpacity onPress={() => Actions.pop()}>
+          <TouchableOpacity
+              onPress={() =>
+                Actions.pop({ refresh: { filterData: this.state } })
+              }
+            >
+            <Text style={{paddingTop: 15}}>Back to Map</Text>
               <Icon
                 type="entypo"
                 name="chevron-thin-down"
@@ -74,41 +79,6 @@ class InfoModal extends Component {
                 </Text>
               </TouchableOpacity>
               <Text>{categories[0].title}</Text>
-            </View>
-            {/* TODO: is_closed actually indicates if business has been permanently closed */}
-            {is_closed ? (
-              <Text style={{ color: 'red' }}>Closed</Text>
-            ) : (
-              <Text style={{ color: 'green' }}>Open Now</Text>
-            )}
-            <View
-              style={{
-                padding: 15,
-                marginTop: 10,
-                backgroundColor: '#F5F5F5',
-                borderRadius: 25,
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-              }}
-            >
-              <View>
-                <Text>Monday</Text>
-                <Text>Tuesday</Text>
-                <Text>Wednesday</Text>
-                <Text>Thursday</Text>
-                <Text>Friday</Text>
-                <Text>Saturday</Text>
-                <Text>Sunday</Text>
-              </View>
-              <View>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-              </View>
             </View>
             <View
               style={{
@@ -175,7 +145,7 @@ const styles = {
     backgroundColor: '#ac7339',
     justifyContent: 'center', // Vertical
     alignItems: 'center', // Horizontal
-    height: 80,
+    height: 100,
     paddingTop: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
