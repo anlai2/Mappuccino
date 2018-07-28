@@ -154,12 +154,13 @@ export default class TestScreen extends React.Component {
   onButtonPress = () => {
     const { region, filter } = this.state;
     this.setState({ loading: true });
+    const priceFilter = _.isNull(filter.price) ? [] : filter.price;
     fetch(
       `https://api.yelp.com/v3/businesses/search?&latitude=${
         region.latitude
       }&longitude=${
         region.longitude
-      }&term=coffee&radius=2500&offset=25&sort_by=distance&price=${filter.price.join(
+      }&term=coffee&radius=2500&offset=25&sort_by=distance&price=${priceFilter.join(
         ',',
       )}`,
       {
