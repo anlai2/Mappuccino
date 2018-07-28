@@ -102,10 +102,9 @@ export default class TestScreen extends React.Component {
         if (this.index !== index) {
           this.index = index;
           this.setState({ index: this.index });
-          const { coordinates } = coffeeShops[this.index];
           this.map.animateToRegion(
             {
-              ...coordinates,
+              ...this.state.coffeeShops[this.index].coordinates,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             },

@@ -25,6 +25,7 @@
   "camelcase": 0,
   "no-console": 0,
   "react/no-array-index-key": 0,
+  "react/destructuring-assignment": 1,
   "no-undef": 0,
   "no-unused-vars": 1,
   "no-restricted-syntax": 0,
