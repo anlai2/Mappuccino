@@ -101,7 +101,6 @@ export default class TestScreen extends React.Component {
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          this.setState({ index: this.index });
           this.map.animateToRegion(
             {
               ...this.state.coffeeShops[this.index].coordinates,
@@ -121,32 +120,21 @@ export default class TestScreen extends React.Component {
   }
 
   onLocationButtonPress = () => {
-    const { coffeeShops, index } = this.state;
-    const { coordinates } = coffeeShops[Math.floor(index)];
-
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        region: {
-          ...position.coords,
-          longitudeDelta: Math.abs(
-            position.coords.longitude - coordinates.longitude + 0.085,
-          ),
-          latitudeDelta: Math.abs(
-            position.coords.latitude - coordinates.latitude + 0.055,
-          ),
-        },
-        currentRegion: {
-          ...position.coords,
-          longitudeDelta: Math.abs(
-            position.coords.longitude - coordinates.longitude + 0.085,
-          ),
-          latitudeDelta: Math.abs(
-            position.coords.latitude - coordinates.latitude + 0.055,
-          ),
-        },
-      });
-    });
-  };
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        if (this.map) {
+          this.map.animateToRegion({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          });
+        }
+      },
+      error => alert('Error: Are location services on?'),
+      { enableHighAccuracy: true },
+    );
+  }
 
   // ES6 function that is ran when we call it on a UI
   // We are calling it on the onPress property of Button in the render method
@@ -264,7 +252,7 @@ export default class TestScreen extends React.Component {
               size={16}
             />
             <Text style={styles.searchButtonStyle}>
-              Search Coffee in Area
+Search Coffee in Area
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -288,7 +276,7 @@ export default class TestScreen extends React.Component {
               size={16}
             />
             <Text style={styles.searchButtonStyle}>
-              Redo Search in Area
+Redo Search in Area
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -309,10 +297,7 @@ export default class TestScreen extends React.Component {
   // Main aspect of a react component, essentially handles what is to be displayed
   render() {
     const {
-      region,
-      coffeeShops,
-      currentAddress,
-      currentRegion,
+      region, coffeeShops, currentAddress, currentRegion,
     } = this.state;
     const { filterData } = this.props;
     return (
@@ -408,9 +393,9 @@ export default class TestScreen extends React.Component {
                         }}
                         source={{
                           uri:
-                            shop.image_url !== ''
-                              ? shop.image_url
-                              : 'https://images.pexels.com/photos/434213/pexels-photo-434213.jpeg?auto=compress&cs=tinysrgb&h=350',
+                              shop.image_url !== ''
+                                ? shop.image_url
+                                : 'https://images.pexels.com/photos/434213/pexels-photo-434213.jpeg?auto=compress&cs=tinysrgb&h=350',
                         }}
                       />
                     </View>
@@ -457,20 +442,16 @@ export default class TestScreen extends React.Component {
                         onPress={() => {
                           Platform.OS === 'ios'
                             ? Linking.openURL(
-                              `http://maps.apple.com/?saddr=${
-                                currentAddress
-                              }&daddr=${shop.location.display_address.join(
+                              `http://maps.apple.com/?saddr=${currentAddress}&daddr=${shop.location.display_address.join(
                                 ' ',
                               )}`,
                             )
                             : Linking.openURL(
                               `comgooglemaps://?saddr=${
                                 currentRegion.latitude
-                              },${
-                                currentRegion.longitude
-                              }&daddr=${shop.coordinates.latitude},${
-                                shop.coordinates.longitude
-                              }`,
+                              },${currentRegion.longitude}&daddr=${
+                                shop.coordinates.latitude
+                              },${shop.coordinates.longitude}`,
                             );
                         }}
                       >
@@ -508,8 +489,7 @@ export default class TestScreen extends React.Component {
         <View style={styles.filterContainer}>
           <TouchableOpacity
             style={{ alignItems: 'center', justifyContent: 'center' }}
-            onPress={() => Actions.filter({ refresh: { filterData } })
-            }
+            onPress={() => Actions.filter({ refresh: { filterData } })}
           >
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-around' }}
@@ -525,6 +505,20 @@ export default class TestScreen extends React.Component {
                 Filter
               </Text>
             </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.locationContainer}>
+          <TouchableOpacity
+            onPress={this.onLocationButtonPress}
+          >
+            <Icon
+              raised
+              reverse
+              name="my-location"
+              type="material-icons"
+              color="rgb(0, 122, 255)"
+              size={20}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -557,6 +551,12 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 0,
     right: 0,
+  },
+  locationContainer: {
+    position: 'absolute',
+    bottom: 5,
+    left: 0,
+    right: 20,
   },
   scrollView: {
     position: 'absolute',
