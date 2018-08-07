@@ -516,8 +516,9 @@ Redo Search in Area
               reverse
               name="my-location"
               type="material-icons"
-              color="rgb(0, 122, 255)"
-              size={20}
+              color="#FFF"
+              iconStyle={{ color: 'rgb(0, 122, 255)' }}
+              size={24}
             />
           </TouchableOpacity>
         </View>
@@ -554,8 +555,7 @@ const styles = StyleSheet.create({
   },
   locationContainer: {
     position: 'absolute',
-    bottom: 5,
-    left: 0,
+    top: 50,
     right: 20,
   },
   scrollView: {
