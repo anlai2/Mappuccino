@@ -86,12 +86,10 @@ export default class TestScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { coffeeShops } = this.state;
-
     this.animation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away
-      if (index >= coffeeShops.length) {
-        index = coffeeShops.length - 1;
+      if (index >= this.state.coffeeShops.length) {
+        index = this.state.coffeeShops.length - 1;
       }
       if (index <= 0) {
         index = 0;
