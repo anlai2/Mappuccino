@@ -5,19 +5,21 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import { MapView, Marker } from 'expo';
-import { Icon, Button, Card, Image } from 'react-native-elements';
+import {
+  Icon,
+  Button,
+  Card,
+  Image,
+} from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import StarRating from 'react-native-star-rating';
 
 class InfoModal extends Component {
-  componentDidMount() {
-    console.log(this.props.shop);
-  }
-
   render() {
+    const { shop } = this.props;
     const {
       image_url,
       name,
@@ -25,17 +27,22 @@ class InfoModal extends Component {
       categories,
       phone,
       display_phone,
-      is_closed,
       price,
       coordinates,
-      location
-    } = this.props.shop;
+      location,
+    } = shop;
 
     return (
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.onBackContainer}>
-            <TouchableOpacity onPress={() => Actions.pop()}>
+            <TouchableOpacity
+              onPress={() => Actions.pop()
+              }
+            >
+              <Text style={{ paddingTop: 15 }}>
+                Back to Map
+              </Text>
               <Icon
                 type="entypo"
                 name="chevron-thin-down"
@@ -49,7 +56,9 @@ class InfoModal extends Component {
           <View
             style={{ flexDirection: 'column', justifyContent: 'space-around' }}
           >
-            <Text style={styles.titleStyle}>{name}</Text>
+            <Text style={styles.titleStyle}>
+              {name}
+            </Text>
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
@@ -58,10 +67,12 @@ class InfoModal extends Component {
                 disabled
                 rating={rating}
                 starSize={18}
-                fullStarColor={'#ac7339'}
-                emptyStarColor={'#86592d'}
+                fullStarColor="#ac7339"
+                emptyStarColor="#86592d"
               />
-              <Text>{price}</Text>
+              <Text>
+                {price}
+              </Text>
             </View>
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
@@ -73,47 +84,14 @@ class InfoModal extends Component {
                   {display_phone}
                 </Text>
               </TouchableOpacity>
-              <Text>{categories[0].title}</Text>
-            </View>
-            {/* TODO: is_closed actually indicates if business has been permanently closed */}
-            {is_closed ? (
-              <Text style={{ color: 'red' }}>Closed</Text>
-            ) : (
-              <Text style={{ color: 'green' }}>Open Now</Text>
-            )}
-            <View
-              style={{
-                padding: 15,
-                marginTop: 10,
-                backgroundColor: '#F5F5F5',
-                borderRadius: 25,
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-              }}
-            >
-              <View>
-                <Text>Monday</Text>
-                <Text>Tuesday</Text>
-                <Text>Wednesday</Text>
-                <Text>Thursday</Text>
-                <Text>Friday</Text>
-                <Text>Saturday</Text>
-                <Text>Sunday</Text>
-              </View>
-              <View>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-                <Text>6:00 AM - 6:00 PM</Text>
-              </View>
+              <Text>
+                {categories[0].title}
+              </Text>
             </View>
             <View
               style={{
                 height: 200,
-                paddingTop: 20
+                paddingTop: 20,
               }}
             >
               <MapView
@@ -122,10 +100,10 @@ class InfoModal extends Component {
                   latitude: coordinates.latitude,
                   longitude: coordinates.longitude,
                   latitudeDelta: 0.0055,
-                  longitudeDelta: 0.0055
+                  longitudeDelta: 0.0055,
                 }}
-                showsUserLocation={true}
-                loadingEnabled={true}
+                showsUserLocation
+                loadingEnabled
                 showsBuildings={false}
                 showsPointsOfInterest={false}
                 loadingIndicatorColor="brown"
@@ -137,10 +115,12 @@ class InfoModal extends Component {
             </View>
             <View
               style={{
-                padding: 5
+                padding: 5,
               }}
             >
-              <Text>{location.display_address.join(' ')}</Text>
+              <Text>
+                {location.display_address.join(' ')}
+              </Text>
             </View>
             <View style={{ padding: 5 }}>
               <Button
@@ -151,15 +131,15 @@ class InfoModal extends Component {
                 onPress={() => {
                   Platform.OS === 'ios'
                     ? Linking.openURL(
-                        `http://maps.apple.com/?address=${location.display_address.join(
-                          ' '
-                        )}`
-                      )
+                      `http://maps.apple.com/?address=${location.display_address.join(
+                        ' ',
+                      )}`,
+                    )
                     : Linking.openURL(
-                        `comgooglemaps://?addr=${
-                          coordinates.latitude
-                        },${coordinates.longitude}`
-                      );
+                      `comgooglemaps://?addr=${
+                        coordinates.latitude
+                      },${coordinates.longitude}`,
+                    );
                 }}
               />
             </View>
@@ -175,22 +155,21 @@ const styles = {
     backgroundColor: '#ac7339',
     justifyContent: 'center', // Vertical
     alignItems: 'center', // Horizontal
-    height: 80,
-    paddingTop: 20,
+    height: 100,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
     position: 'relative',
-    paddingTop: 25
+    paddingTop: 25,
   },
   onBackContainer: {
-    backgroundColor: '#ac7339'
+    backgroundColor: '#ac7339',
   },
   titleStyle: {
     fontSize: 24,
-    fontWeight: '300'
-  }
+    fontWeight: '300',
+  },
 };
 
 export default InfoModal;

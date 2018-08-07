@@ -1,7 +1,18 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Dimensions, Switch } from 'react-native';
-import { Icon, Button, Card, Divider } from 'react-native-elements';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Switch,
+} from 'react-native';
+import {
+  Icon,
+  Button,
+  Card,
+  Divider,
+} from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 const { width, height } = Dimensions.get('window');
@@ -12,74 +23,82 @@ const CARD_WIDTH = width - 75;
 class FilterModal extends Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
     const {
       filter,
       priceOne,
       priceTwo,
-      openNow
-    } = this.props.navigation.state.params.refresh.filterData;
+      openNow,
+    } = navigation.state.params.refresh.filterData;
 
     this.state = {
       filter: {
-        price: _.isNull(filter.price) ? [] : filter.price
+        price: _.isNull(filter.price) ? [] : filter.price,
       },
       priceOne: _.isNull(priceOne) ? false : priceOne,
       priceTwo: _.isNull(priceTwo) ? false : priceTwo,
       openNow: true,
-      topRated: false
+      topRated: false,
     };
   }
 
   priceFilterOne = () => {
-    if (this.state.priceOne) {
-      this.state.filter.price.shift();
+    const { priceOne, filter } = this.state;
+    if (priceOne) {
+      filter.price.shift();
       this.setState({
-        priceOne: false
+        priceOne: false,
       });
     } else {
-      this.state.filter.price.unshift(1);
+      filter.price.unshift(1);
       this.setState({
-        priceOne: true
+        priceOne: true,
       });
     }
   };
 
   priceFilterTwo = () => {
-    if (this.state.priceTwo) {
-      this.state.filter.price.pop();
+    const { priceTwo, filter } = this.state;
+    if (priceTwo) {
+      filter.price.pop();
       this.setState({
-        priceTwo: false
+        priceTwo: false,
       });
     } else {
-      this.state.filter.price.push(2);
+      filter.price.push(2);
       this.setState({
-        priceTwo: true
+        priceTwo: true,
       });
     }
   };
 
   handleOpenNow = () => {
+    const { openNow } = this.state;
     this.setState({
-      openNow: !this.state.openNow
+      openNow: !openNow,
     });
   };
 
   handleTopRated = () => {
+    const { topRated } = this.state;
     this.setState({
-      topRated: !this.state.topRated
+      topRated: !topRated,
     });
   };
 
   render() {
+    const { priceOne, priceTwo, openNow } = this.state;
+
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.container}>
+        <View style={styles.headerContainer}>
           <View style={styles.onBackContainer}>
             <TouchableOpacity
-              onPress={() =>
-                Actions.pop({ refresh: { filterData: this.state } })
-              }
+              onPress={() => Actions.pop({ refresh: { filterData: this.state } })}
             >
+              <Text style={{ paddingTop: 15 }}>
+                Back to Map
+              </Text>
               <Icon
                 type="entypo"
                 name="chevron-thin-down"
@@ -97,7 +116,9 @@ class FilterModal extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={styles.filterTextStyle}>Price</Text>
+              <Text style={styles.filterTextStyle}>
+                Price
+              </Text>
               <View
                 style={{ flexDirection: 'row', justifyContent: 'space-around' }}
               >
@@ -105,7 +126,7 @@ class FilterModal extends Component {
                   title="$"
                   textStyle={{ color: 'black' }}
                   buttonStyle={
-                    this.state.priceOne
+                    priceOne
                       ? styles.onPriceButtonStyle
                       : styles.offPriceButtonStyle
                   }
@@ -114,7 +135,7 @@ class FilterModal extends Component {
                 <Button
                   title="$$"
                   buttonStyle={
-                    this.state.priceTwo
+                    priceTwo
                       ? styles.onPriceButtonStyle
                       : styles.offPriceButtonStyle
                   }
@@ -127,23 +148,22 @@ class FilterModal extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={styles.filterTextStyle}>Open Now</Text>
+              <Text style={styles.filterTextStyle}>
+                Open Now
+              </Text>
               <Switch
                 onValueChange={this.handleOpenNow}
-                onTintColor={'#86592d'}
-                value={this.state.openNow}
+                onTintColor="#86592d"
+                value={openNow}
               />
             </View>
             <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text style={styles.filterTextStyle}>Top Rated</Text>
-              <Switch
-                onValueChange={this.handleTopRated}
-                onTintColor={'#86592d'}
-                value={this.state.topRated}
-              />
+              <Text style={styles.filterTextStyle}>
+                More coming soon...
+              </Text>
             </View>
           </Card>
         </View>
@@ -157,27 +177,26 @@ FilterModal.defaultProps = {
     filter: {
       price: [],
       priceOne: null,
-      priceTwo: null
-    }
-  }
+      priceTwo: null,
+    },
+  },
 };
 
 const styles = {
-  container: {
+  headerContainer: {
     backgroundColor: '#ac7339',
     justifyContent: 'center', // Vertical
     alignItems: 'center', // Horizontal
-    height: 80,
+    height: 100,
     paddingTop: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
     position: 'relative',
-    paddingTop: 25
   },
   onBackContainer: {
-    backgroundColor: '#ac7339'
+    backgroundColor: '#ac7339',
   },
   priceButtonContainer: {
     height: 60,
@@ -186,21 +205,21 @@ const styles = {
     alignContent: 'space-around',
     paddingTop: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   priceButtonStyle: {
-    flex: 1
+    flex: 1,
   },
   offPriceButtonStyle: {
-    backgroundColor: '#D3D3D3'
+    backgroundColor: '#D3D3D3',
   },
   onPriceButtonStyle: {
-    backgroundColor: '#86592d'
+    backgroundColor: '#86592d',
   },
   filterTextStyle: {
     fontSize: 20,
-    fontWeight: '300'
-  }
+    fontWeight: '300',
+  },
 };
 
 export default FilterModal;

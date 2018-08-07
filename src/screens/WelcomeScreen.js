@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import { LinearGradient } from 'expo';
 import { Actions } from 'react-native-router-flux';
 
-import WelcomeImage from '../../assets/coffeeImage.jpg';
+import WelcomeImage from '../../assets/mappuccinoIcon.png';
+import MappuccinoName from '../../assets/mappuccinoName.png';
+
 class WelcomeScreen extends Component {
   render() {
     return (
@@ -11,24 +18,20 @@ class WelcomeScreen extends Component {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#FFFFFF'
+          justifyContent: 'space-around',
+          backgroundColor: '#FFFFFF',
         }}
       >
         <View style={{ padding: 15 }}>
-          <Text
-            style={{ textAlign: 'center', fontWeight: '200', fontSize: 48 }}
-          >
-            Mappuccino
-          </Text>
+          <Image source={MappuccinoName} style={{ width: 400, height: 100, resizeMode: 'contain' }} />
         </View>
         <Image
           source={WelcomeImage}
           style={{
-            resizeMode: 'cover',
-            width: 400,
-            height: 400,
-            marginBottom: 10
+            resizeMode: 'contain',
+            width: 200,
+            height: 200,
+            marginBottom: 10,
           }}
         />
         <View style={{ padding: 15 }}>
@@ -47,7 +50,7 @@ class WelcomeScreen extends Component {
               style={{
                 backgroundColor: 'transparent',
                 fontSize: 18,
-                color: '#fff'
+                color: '#fff',
               }}
             >
               Get Started
