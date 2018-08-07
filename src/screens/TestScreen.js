@@ -483,6 +483,21 @@ Redo Search in Area
             ))
             : null}
         </Animated.ScrollView>
+        <View style={styles.locationContainer}>
+          <TouchableOpacity
+            onPress={this.onLocationButtonPress}
+          >
+            <Icon
+              raised
+              reverse
+              name="my-location"
+              type="material-icons"
+              color="#FFF"
+              iconStyle={{ color: 'rgb(0, 122, 255)' }}
+              size={24}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.buttonContainer}>
           {this.renderButton()}
         </View>
@@ -505,21 +520,6 @@ Redo Search in Area
                 Filter
               </Text>
             </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.locationContainer}>
-          <TouchableOpacity
-            onPress={this.onLocationButtonPress}
-          >
-            <Icon
-              raised
-              reverse
-              name="my-location"
-              type="material-icons"
-              color="#FFF"
-              iconStyle={{ color: 'rgb(0, 122, 255)' }}
-              size={24}
-            />
           </TouchableOpacity>
         </View>
       </View>
