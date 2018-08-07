@@ -25,7 +25,6 @@ const CARD_WIDTH = width - 75;
 export default class TestScreen extends React.Component {
   constructor(props) {
     super(props);
-    const { filterData } = this.props;
     this.state = {
       region: {
         longitude: -122.45213824240618,
@@ -37,8 +36,8 @@ export default class TestScreen extends React.Component {
       currentAddress: '',
       coffeeShops: {},
       filter: {
-        price: !_.isNull(filterData.filter.price)
-          ? filterData.filter.price
+        price: !_.isNull(this.props.filterData.filter.price)
+          ? this.props.filterData.filter.price
           : [],
         openNow: true,
       },
@@ -112,8 +111,10 @@ export default class TestScreen extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ filter: nextProps.filterData.filter });
+  async componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    await this.setState({ filter: nextProps.filterData.filter });
+    console.log(this.state.filter);
     this.onButtonPress();
   }
 
