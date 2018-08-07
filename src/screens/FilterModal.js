@@ -91,15 +91,15 @@ class FilterModal extends Component {
             <TouchableOpacity
               onPress={() => Actions.pop({ refresh: { filterData: this.state } })}
             >
+              <Text style={{ paddingTop: 15 }}>
+                Back to Map
+              </Text>
               <Icon
                 type="entypo"
                 name="chevron-thin-down"
                 color="black"
                 size={28}
               />
-              <Text style={{ paddingTop: 15 }}>
-                Back to Map
-              </Text>
             </TouchableOpacity>
           </View>
         </View>
