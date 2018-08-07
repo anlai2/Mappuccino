@@ -19,7 +19,7 @@ import StarRating from 'react-native-star-rating';
 
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 4;
+const CARD_HEIGHT = height / 3.5;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
@@ -112,9 +112,7 @@ export default class TestScreen extends React.Component {
   }
 
   async componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     await this.setState({ filter: nextProps.filterData.filter });
-    console.log(this.state.filter);
     this.onButtonPress();
   }
 
@@ -403,6 +401,9 @@ Redo Search in Area
                         {`${(shop.distance * 0.00062137).toFixed(
                           1,
                         )} Miles Away`}
+                      </Text>
+                      <Text style={{ fontWeight: '300' }}>
+                        Caffeine Content: ~75mg
                       </Text>
                     </View>
                   </View>
