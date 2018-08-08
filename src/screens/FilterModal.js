@@ -119,7 +119,7 @@ class FilterModal extends Component {
               >
                 <Button
                   title="$"
-                  textStyle={{ color: 'black' }}
+                  textStyle={{ color: this.state.priceOne ? 'white' : 'black' }}
                   buttonStyle={
                     this.state.priceOne
                       ? styles.onPriceButtonStyle
@@ -134,7 +134,7 @@ class FilterModal extends Component {
                       ? styles.onPriceButtonStyle
                       : styles.offPriceButtonStyle
                   }
-                  textStyle={{ color: 'black' }}
+                  textStyle={{ color: this.state.priceTwo ? 'white' : 'black' }}
                   onPress={this.priceFilterTwo}
                 />
               </View>
@@ -205,7 +205,7 @@ class FilterModal extends Component {
                 >
                   <Button
                     title="Hot"
-                    textStyle={{ color: 'black' }}
+                    textStyle={{ color: this.state.hot ? 'white' : 'black' }}
                     buttonStyle={
                     this.state.hot
                       ? styles.onPriceButtonStyle
@@ -220,7 +220,7 @@ class FilterModal extends Component {
                       ? styles.onPriceButtonStyle
                       : styles.offPriceButtonStyle
                   }
-                    textStyle={{ color: 'black' }}
+                    textStyle={{ color: this.state.cold ? 'white' : 'black' }}
                     onPress={() => this.setState({ cold: !this.state.cold })}
                   />
                 </View>
