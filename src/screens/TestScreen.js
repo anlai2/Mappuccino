@@ -101,8 +101,8 @@ export default class TestScreen extends React.Component {
           this.map.animateToRegion(
             {
               ...this.state.coffeeShops[this.index].coordinates,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.015,
             },
             350,
           );
@@ -123,8 +123,8 @@ export default class TestScreen extends React.Component {
           this.map.animateToRegion({
             latitude: coords.latitude,
             longitude: coords.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
           });
         }
       },
