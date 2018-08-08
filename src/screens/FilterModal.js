@@ -28,6 +28,7 @@ class FilterModal extends Component {
       filter,
       priceOne,
       priceTwo,
+      caffeine,
     } = this.props.navigation.state.params.refresh.filterData;
 
     this.state = {
@@ -38,6 +39,7 @@ class FilterModal extends Component {
       priceTwo: _.isNull(priceTwo) ? false : priceTwo,
       openNow: true,
       topRated: false,
+      caffeine: _.isNull(caffeine) ? 125 : caffeine,
       hot: true,
       cold: true,
     };
@@ -84,6 +86,7 @@ class FilterModal extends Component {
   };
 
   render() {
+    console.log(this.state.caffeine);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -175,7 +178,8 @@ class FilterModal extends Component {
                 minimumValue={0}
                 maximumValue={250}
                 step={5}
-                value={125}
+                value={this.state.caffeine}
+                onValueChange={value => this.setState({ caffeine: value })}
               />
               <View
                 style={{

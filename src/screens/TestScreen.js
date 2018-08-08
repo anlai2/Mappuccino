@@ -41,6 +41,7 @@ export default class TestScreen extends React.Component {
           : [],
         openNow: true,
       },
+      caffeine: !_.isUndefined(this.props.filterData.caffeine) ? this.props.filterData.caffeine : 125,
       loading: false,
       searched: false,
     };
@@ -113,7 +114,9 @@ export default class TestScreen extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     await this.setState({ filter: nextProps.filterData.filter });
+    await this.setState({ caffeine: nextProps.filterData.caffeine });
     this.onButtonPress();
+    console.log(nextProps);
   }
 
   onLocationButtonPress = () => {
@@ -403,7 +406,9 @@ Redo Search in Area
                         )} Miles Away`}
                       </Text>
                       <Text style={{ fontWeight: '300' }}>
-                        Caffeine Content: ~75mg
+                        Caffeine Content: ~
+                        {this.state.caffeine}
+                        mg
                       </Text>
                     </View>
                   </View>
