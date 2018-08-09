@@ -41,7 +41,9 @@ export default class TestScreen extends React.Component {
           : [],
         openNow: true,
       },
-      caffeine: !_.isUndefined(this.props.filterData.caffeine) ? this.props.filterData.caffeine : 125,
+      caffeine: !_.isUndefined(this.props.filterData.caffeine)
+        ? this.props.filterData.caffeine
+        : 125,
       loading: false,
       searched: false,
     };

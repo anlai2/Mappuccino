@@ -39,7 +39,7 @@ class FilterModal extends Component {
       priceTwo: _.isNull(priceTwo) ? false : priceTwo,
       openNow: true,
       topRated: false,
-      caffeine: _.isNull(caffeine) ? 125 : caffeine,
+      caffeine: _.isUndefined(caffeine) ? 125 : caffeine,
       hot: true,
       cold: true,
     };
@@ -191,7 +191,7 @@ class FilterModal extends Component {
                   0 mg
                 </Text>
                 <Text>
-                  125 mg
+                  {this.state.caffeine} mg
                 </Text>
                 <Text>
                   250 mg
