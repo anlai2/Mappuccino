@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Switch,
+  Slider,
 } from 'react-native';
 import {
   Icon,
@@ -23,13 +24,12 @@ const CARD_WIDTH = width - 75;
 class FilterModal extends Component {
   constructor(props) {
     super(props);
-    const { navigation } = this.props;
     const {
       filter,
       priceOne,
       priceTwo,
-      openNow,
-    } = navigation.state.params.refresh.filterData;
+      caffeine,
+    } = this.props.navigation.state.params.refresh.filterData;
 
     this.state = {
       filter: {
@@ -39,18 +39,20 @@ class FilterModal extends Component {
       priceTwo: _.isNull(priceTwo) ? false : priceTwo,
       openNow: true,
       topRated: false,
+      caffeine: _.isUndefined(caffeine) ? 125 : caffeine,
+      hot: true,
+      cold: true,
     };
   }
 
   priceFilterOne = () => {
-    const { priceOne, filter } = this.state;
-    if (priceOne) {
-      filter.price.shift();
+    if (this.state.priceOne) {
+      this.state.filter.price.shift();
       this.setState({
         priceOne: false,
       });
     } else {
-      filter.price.unshift(1);
+      this.state.filter.price.unshift(1);
       this.setState({
         priceOne: true,
       });
@@ -58,14 +60,13 @@ class FilterModal extends Component {
   };
 
   priceFilterTwo = () => {
-    const { priceTwo, filter } = this.state;
-    if (priceTwo) {
-      filter.price.pop();
+    if (this.state.priceTwo) {
+      this.state.filter.price.pop();
       this.setState({
         priceTwo: false,
       });
     } else {
-      filter.price.push(2);
+      this.state.filter.price.push(2);
       this.setState({
         priceTwo: true,
       });
@@ -73,25 +74,22 @@ class FilterModal extends Component {
   };
 
   handleOpenNow = () => {
-    const { openNow } = this.state;
     this.setState({
-      openNow: !openNow,
+      openNow: !this.state.openNow,
     });
   };
 
   handleTopRated = () => {
-    const { topRated } = this.state;
     this.setState({
-      topRated: !topRated,
+      topRated: !this.state.topRated,
     });
   };
 
   render() {
-    const { priceOne, priceTwo, openNow } = this.state;
-
+    console.log(this.state.caffeine);
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.headerContainer}>
+        <View style={styles.container}>
           <View style={styles.onBackContainer}>
             <TouchableOpacity
               onPress={() => Actions.pop({ refresh: { filterData: this.state } })}
@@ -124,9 +122,9 @@ class FilterModal extends Component {
               >
                 <Button
                   title="$"
-                  textStyle={{ color: 'black' }}
+                  textStyle={{ color: this.state.priceOne ? 'white' : 'black' }}
                   buttonStyle={
-                    priceOne
+                    this.state.priceOne
                       ? styles.onPriceButtonStyle
                       : styles.offPriceButtonStyle
                   }
@@ -135,11 +133,11 @@ class FilterModal extends Component {
                 <Button
                   title="$$"
                   buttonStyle={
-                    priceTwo
+                    this.state.priceTwo
                       ? styles.onPriceButtonStyle
                       : styles.offPriceButtonStyle
                   }
-                  textStyle={{ color: 'black' }}
+                  textStyle={{ color: this.state.priceTwo ? 'white' : 'black' }}
                   onPress={this.priceFilterTwo}
                 />
               </View>
@@ -154,7 +152,7 @@ class FilterModal extends Component {
               <Switch
                 onValueChange={this.handleOpenNow}
                 onTintColor="#86592d"
-                value={openNow}
+                value={this.state.openNow}
               />
             </View>
             <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
@@ -162,8 +160,75 @@ class FilterModal extends Component {
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <Text style={styles.filterTextStyle}>
-                More coming soon...
+                Top Rated
               </Text>
+              <Switch
+                onValueChange={this.handleTopRated}
+                onTintColor="#86592d"
+                value={this.state.topRated}
+              />
+            </View>
+            <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
+            <View>
+              <Text style={styles.filterTextStyle}>
+                Caffeine Content
+              </Text>
+              <Slider
+                minimumTrackTintColor="#86592d"
+                minimumValue={0}
+                maximumValue={250}
+                step={5}
+                value={this.state.caffeine}
+                onValueChange={value => this.setState({ caffeine: value })}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Text>
+                  0 mg
+                </Text>
+                <Text>
+                  {this.state.caffeine} mg
+                </Text>
+                <Text>
+                  250 mg
+                </Text>
+              </View>
+              <Divider style={{ backgroundColor: '#D0D0D0', margin: 15 }} />
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+              >
+                <Text style={styles.filterTextStyle}>
+                  Drink Temperature
+                </Text>
+                <View
+                  style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+                >
+                  <Button
+                    title="Hot"
+                    textStyle={{ color: this.state.hot ? 'white' : 'black' }}
+                    buttonStyle={
+                    this.state.hot
+                      ? styles.onPriceButtonStyle
+                      : styles.offPriceButtonStyle
+                  }
+                    onPress={() => this.setState({ hot: !this.state.hot })}
+                  />
+                  <Button
+                    title="Cold"
+                    buttonStyle={
+                    this.state.cold
+                      ? styles.onPriceButtonStyle
+                      : styles.offPriceButtonStyle
+                  }
+                    textStyle={{ color: this.state.cold ? 'white' : 'black' }}
+                    onPress={() => this.setState({ cold: !this.state.cold })}
+                  />
+                </View>
+              </View>
             </View>
           </Card>
         </View>
@@ -183,17 +248,17 @@ FilterModal.defaultProps = {
 };
 
 const styles = {
-  headerContainer: {
+  container: {
     backgroundColor: '#ac7339',
     justifyContent: 'center', // Vertical
     alignItems: 'center', // Horizontal
     height: 100,
-    paddingTop: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
     position: 'relative',
+    paddingTop: 25,
   },
   onBackContainer: {
     backgroundColor: '#ac7339',
