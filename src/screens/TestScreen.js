@@ -116,7 +116,6 @@ export default class TestScreen extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     await this.setState({ filter: nextProps.filterData.filter });
-    await this.setState({ caffeine: nextProps.filterData.caffeine });
     this.onButtonPress();
     console.log(nextProps);
   }
