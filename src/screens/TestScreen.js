@@ -19,13 +19,12 @@ import StarRating from 'react-native-star-rating';
 
 const { width, height } = Dimensions.get('window');
 
-const CARD_HEIGHT = height / 4;
+const CARD_HEIGHT = height / 3.5;
 const CARD_WIDTH = width - 75;
 
 export default class TestScreen extends React.Component {
   constructor(props) {
     super(props);
-    const { filterData } = this.props;
     this.state = {
       region: {
         longitude: -122.45213824240618,
@@ -37,11 +36,14 @@ export default class TestScreen extends React.Component {
       currentAddress: '',
       coffeeShops: {},
       filter: {
-        price: !_.isNull(filterData.filter.price)
-          ? filterData.filter.price
+        price: !_.isNull(this.props.filterData.filter.price)
+          ? this.props.filterData.filter.price
           : [],
         openNow: true,
       },
+      caffeine: !_.isUndefined(this.props.filterData.caffeine)
+        ? this.props.filterData.caffeine
+        : 125,
       loading: false,
       searched: false,
     };
@@ -86,12 +88,10 @@ export default class TestScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { coffeeShops } = this.state;
-
     this.animation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away
-      if (index >= coffeeShops.length) {
-        index = coffeeShops.length - 1;
+      if (index >= this.state.coffeeShops.length) {
+        index = this.state.coffeeShops.length - 1;
       }
       if (index <= 0) {
         index = 0;
@@ -104,8 +104,8 @@ export default class TestScreen extends React.Component {
           this.map.animateToRegion(
             {
               ...this.state.coffeeShops[this.index].coordinates,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.015,
             },
             350,
           );
@@ -114,9 +114,11 @@ export default class TestScreen extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ filter: nextProps.filterData.filter });
+  async componentWillReceiveProps(nextProps) {
+    await this.setState({ filter: nextProps.filterData.filter });
+    await this.setState({ caffeine: nextProps.filterData.caffeine });
     this.onButtonPress();
+    console.log(nextProps);
   }
 
   onLocationButtonPress = () => {
@@ -126,8 +128,8 @@ export default class TestScreen extends React.Component {
           this.map.animateToRegion({
             latitude: coords.latitude,
             longitude: coords.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
           });
         }
       },
@@ -404,6 +406,11 @@ Redo Search in Area
                         {`${(shop.distance * 0.00062137).toFixed(
                           1,
                         )} Miles Away`}
+                      </Text>
+                      <Text style={{ fontWeight: '300' }}>
+                        Caffeine Content: ~
+                        {this.state.caffeine}
+                        mg
                       </Text>
                     </View>
                   </View>
