@@ -5,7 +5,6 @@ import {
   Modal,
 } from 'react-native-router-flux';
 import MapScreen from './screens/MapScreen';
-import TestScreen from './screens/TestScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import FilterModal from './screens/FilterModal';
 import InfoModal from './screens/InfoModal';
@@ -17,7 +16,7 @@ const RouterComponent = () => (
     <Modal>
       <Scene key="welcome" hideNavBar component={WelcomeScreen} initial panHandlers={null} />
       <Scene key="root" hideNavbar panHandlers={null}>
-        <Scene key="map" hideNavBar component={TestScreen} panHandlers={null} />
+        <Scene key="map" hideNavBar component={MapScreen} panHandlers={null} />
       </Scene>
       <Scene key="filter" hideNavBar component={FilterModal} panHandlers={null} />
       <Scene key="info" hideNavBar component={InfoModal} panHandlers={null} />
