@@ -148,9 +148,9 @@ export default class TestScreen extends React.Component {
         region.latitude
       }&longitude=${
         region.longitude
-      }&term=coffee&radius=2500&offset=25&sort_by=distance&price=${priceFilter.join(
+      }&term=coffee&radius=2500&offset=25&sort_by=distance${priceFilter.length <= 0 ? '' : `&price=${priceFilter.join(
         ',',
-      )}`,
+      )}`}`,
       {
         method: 'GET',
         headers: {
