@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "MappuccinoDemo",
+    "name": "Mappuccino",
     "description": "Find coffee shops near you with a single button.",
-    "slug": "mappuccinoDemo",
+    "slug": "mappuccino",
     "privacy": "public",
     "sdkVersion": "28.0.0",
     "platforms": ["ios", "android"],
